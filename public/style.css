@@ -20,7 +20,12 @@ margin-left: 2rem;
 h3{
     font-size: 1.5rem;
     margin: 2rem;
+
 }
+
+input{
+        margin: 2rem;
+    }
 
 img {
 border-radius: 10px;
@@ -29,6 +34,6 @@ height: 250px;
 object-fit:cover;
 }
 
-p{
+p {
     font-size: 1.3rem;
 }

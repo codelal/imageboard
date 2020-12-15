@@ -8,13 +8,25 @@
     <h1>Welcome to this wounderful Imageboard</h1>
     <h3>Latest Images</h3>
     <div id = "main">
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+             <!-- Bind the input value to the Vue instance with `v-model` -->
+             <!-- Alternative:v-bind:value="title -- one way of binding, wert kann so aber nur über meinen Code, nicht über user geändert werden/-->
+            <input name ="title" placeholder="Title" type ="text" v-model="title">
+            <input name ="imageDescription" placeholder="Image Description"type ="text" v-model="imageDescription">
+            <input name ="filename" placeholder="Name"type ="text" v-model="filename">
+            <input name ="file" type ="file" accept ="image/*" @change="handleFileChange">
+            <button @click="handleUpload">Upload</button>
+            <!-- Also available: -->
+        <!-- <button @click.prevent.default="upload">Upload</button> -->
+        </form>
+
         <div class="grid-container">
-        <div v-for="image in images">
-  <img v-bind:src="image.url"/>
-  <p>{{image.title}}</p>
-        </h>
-           </div>
+            <div v-for="image in images">
+                <img v-bind:src="image.url"/>
+                <p>{{image.title}}</p>
+            </div>
         </div>
+    </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
      <script src="/js/script.js"></script>

@@ -58,9 +58,9 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("upload req.file filename", req.file); //multer sets up a file property on req object
     const { userName, title, description } = req.body;
     // console.log(title, userName, description);
-    const imageUrl = `${config.s3Url}${req.file.filename}`;
+    const url = `${config.s3Url}${req.file.filename}`;
     // console.log("imageUrl", imageUrl);
-    db.insertUserDataIntoImages(imageUrl, userName, title, description)
+    db.insertUserDataIntoImages(url, userName, title, description)
         .then((result) => {
             // console.log("result from insertUserDataIntoImages", result);
         })
@@ -70,7 +70,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 
     if (req.file) {
         res.json({
-            imageUrl: imageUrl,
+            url: url,
             userName: userName,
             title: title,
             imageDescription: description,

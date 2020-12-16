@@ -7,6 +7,7 @@
 <body>
     <h1>Welcome to this wounderful Imageboard</h1>
     <h3>Latest Images</h3>
+     <!-- Main element has access to Vue logic -->
     <div id = "main">
         <form method="POST" action="/upload" enctype="multipart/form-data">
              <!-- Bind the input value to the Vue instance with `v-model` -->
@@ -22,11 +23,18 @@
 
         <div class="grid-container">
             <div v-for="image in images">
-                <img v-bind:src="image.url"/>
+                <img :src="image.url"/>
                 <p>{{image.title}}</p>
             </div>
         </div>
+          <!-- this is where I render my component (inside Main) -->
+        
+        
     </div>
+       <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
+
+    
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
      <script src="/js/script.js"></script>

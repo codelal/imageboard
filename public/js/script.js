@@ -41,7 +41,7 @@ new Vue({
             formData.append("file", this.file);
             formData.append("userName", this.userName);
             formData.append("imageDescription", this.imageDescription);
-            console.log("formData is", formData);
+            //console.log("formData is", formData);
 
             axios
                 .post("/upload", formData)

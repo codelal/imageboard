@@ -13,7 +13,7 @@
              <!-- Alternative:v-bind:value="title -- one way of binding, wert kann so aber nur über meinen Code, nicht über user geändert werden/-->
             <input name ="title" placeholder="Title" type ="text" v-model="title">
             <input name ="imageDescription" placeholder="Image Description"type ="text" v-model="imageDescription">
-            <input name ="userName" placeholder="Name"type ="text" v-model="userName">
+            <input name ="userName" placeholder="username"type ="text" v-model="userName">
             <input name ="file" type ="file" accept ="image/*" @change="handleFileChange">
             <button @click="handleUpload">Upload</button>
             <!-- Also available: -->

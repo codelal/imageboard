@@ -5,20 +5,20 @@ new Vue({
     data: {
         images: [],
         title: "",
-        imageDescription: "",
         userName: "",
+        imageDescription: "",
         file: null,
     },
     mounted: function () {
         var self = this;
-        console.log("this in var self", self);
+        // console.log("this in var self", self);
         axios
             .get("/main")
             .then(function (res) {
-                console.log("response.data", res.data);
+                // console.log("response.data", res.data);
                 // console.log("this inside then", this);// shows windows object, has an other referencen than this
                 self.images = res.data;
-                console.log("self.images", self.images);
+                // console.log("self.images", self.images);
             })
             .catch(function (err) {
                 console.log("error:", err);
@@ -26,8 +26,8 @@ new Vue({
     },
     methods: {
         handleFileChange: function (event) {
-            console.log("event target", event);
-            // Set the data's "image" property to the newly uploaded file
+            // console.log("event target", event);
+            // Set the data's "file" property to the newly uploaded file
             this.file = event.target.files[0];
         },
         handleUpload: function (event) {
@@ -41,11 +41,17 @@ new Vue({
             formData.append("file", this.file);
             formData.append("userName", this.userName);
             formData.append("imageDescription", this.imageDescription);
-            
+            console.log("formData is", formData);
 
-            axios.post("/upload", formData).then((res) => {
-                console.log("passt", res);
-            });
+            axios
+                .post("/upload", formData)
+                .then((res) => {
+                    console.log("response from upload", res.data);
+                    this.images.unshift(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
     },
 });

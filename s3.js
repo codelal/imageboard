@@ -14,8 +14,11 @@ const s3 = new aws.S3({
 });
 
 module.exports.upload = (req, res, next) => {
+    if (!req.file) {
+        return res.sendStatus(500);
+    }
     const { filename, mimetype, size, path } = req.file;
-    console.log("req.file in s3", req.file);
+    
 
     const promise = s3
         .putObject({

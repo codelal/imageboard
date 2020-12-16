@@ -6,7 +6,7 @@ new Vue({
         images: [],
         title: "",
         imageDescription: "",
-        filename: "",
+        userName: "",
         file: null,
     },
     mounted: function () {
@@ -28,7 +28,7 @@ new Vue({
         handleFileChange: function (event) {
             console.log("event target", event);
             // Set the data's "image" property to the newly uploaded file
-            this.image = event.target.files[0];
+            this.file = event.target.files[0];
         },
         handleUpload: function (event) {
             event.preventDefault();
@@ -39,8 +39,9 @@ new Vue({
             //1.Create a FormData instance and append the relevant fields
             formData.append("title", this.title);
             formData.append("file", this.file);
-            formData.append("filename", this.name);
-            formData.append("file", this.file);
+            formData.append("userName", this.userName);
+            formData.append("imageDescription", this.imageDescription);
+            
 
             axios.post("/upload", formData).then((res) => {
                 console.log("passt", res);

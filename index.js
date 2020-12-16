@@ -39,10 +39,11 @@ const uploader = multer({
 
 app.use(express.static("public"));
 
-app.get("/main", (req, res) => {
+app.get("/:image", (req, res) => {
+    const { image } = req.params;
     db.getUserData()
         .then(({ rows }) => {
-            // console.log(rows);
+            console.log("rows", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -54,30 +55,29 @@ app.get("/main", (req, res) => {
 //  Add multer as a middleware for the route below
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("upload req.body", req.body);
-    console.log("upload req.file filename", req.file); //multer sets up a file property on req object
+    // console.log("upload req.body", req.body);
+    // console.log("upload req.file filename", req.file); //multer sets up a file property on req object
     const { userName, title, description } = req.body;
     // console.log(title, userName, description);
     const url = `${config.s3Url}${req.file.filename}`;
     // console.log("imageUrl", imageUrl);
     db.insertUserDataIntoImages(url, userName, title, description)
-        .then((result) => {
-            // console.log("result from insertUserDataIntoImages", result);
+        .then(() => {
+            //  console.log("result from insertUserDataIntoImages", result);
+            if (req.file) {
+                res.json({
+                    url: url,
+                    userName: userName,
+                    title: title,
+                    imageDescription: description,
+                });
+            } else {
+                res.json({ sucess: false });
+            }
         })
         .catch((err) => {
             console.log("error in insertUserDataIntoImages", err);
         });
-
-    if (req.file) {
-        res.json({
-            url: url,
-            userName: userName,
-            title: title,
-            imageDescription: description,
-        });
-    } else {
-        res.json({ sucess: false });
-    }
 });
 
 app.listen(8080, () => console.log("Imageboardserver is listenting"));

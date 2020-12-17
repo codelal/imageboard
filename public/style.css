@@ -37,7 +37,7 @@ p {
     font-size: 1.3rem;
 }
 
-.more-button{
+#more-button{
    margin-left: 50%;
    height: 3rem;
    width: 6rem;
@@ -50,4 +50,8 @@ p {
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.hidden{
+  visibility: hidden;
 }

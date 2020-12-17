@@ -95,21 +95,29 @@
                 // );
             },
             showMoreImages: function () {
-                //console.log("button to show more images");
-                // console.log("latest id", this.images[0].id);
+                var self = this;
+                var j = self.images.length - 1;
 
-                //console.log("self in showMoreImages", self);
-                // console.log("this in showMoreImages", this.images);
-                var addNewImages = this;
-                axios.get("/more/" + this.images[2].id).then(function (res) {
-                  addNewImages.images.push(res.data);
-                    console.log(
-                        "res from showMoreImages",
+                axios
+                    .get("/more/" + self.images[j].id)
+                    .then(function (res) {
+                        for (var i = 0; i < res.data.length; i++) {
+                            // console.log("id", id);
+                            if (res.data[i].id === res.data[i].lowestId) {
+                                self.images.push(res.data[i]);
+                                document
+                                    .getElementById("more-button")
+                                    .classList.add("hidden");
+                            } else {
+                                self.images.push(res.data[i]);
+                            }
+                        }
 
-                        addNewImages.images
-                    );
-                    // this.images.push(res.data);
-                });
+                        // console.log("res from showMoreImages", addNewImages.images);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             },
         },
     });

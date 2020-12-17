@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
-// multer middleware for parsing multipart formdata and process files
 const multer = require("multer");
-// uid-safe for generating unique Ids
 const uidSafe = require("uid-safe");
 const path = require("path");
 const s3 = require("./s3");
@@ -52,17 +50,29 @@ app.get("/main", (req, res) => {
 
 app.get("/main/:imageId", (req, res) => {
     const { imageId } = req.params;
-    console.log("imageId vom req.body", imageId);
-    db.getSingleImage(imageId).then(({ rows }) => {
-        console.log("rows single Image", rows);
-        res.json(rows);
-    }).catch((err)=>{
-        console.log(err);
-    });
+    //console.log("imageId vom req.body", imageId);
+    db.getSingleImage(imageId)
+        .then(({ rows }) => {
+            //console.log("rows get single Image", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
 
-// "/upload" POST route to handle the image upload ----------------------------
-//  Add multer as a middleware for the route below
+app.get("/more/:latestId", (req, res) => {
+    const { latestId } = req.params;
+    console.log("latesId", latestId);
+    db.getMoreImages(latestId)
+        .then(({ rows }) => {
+            console.log("rows get more Images", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in getMoreImages", err);
+        });
+});
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     // console.log("upload req.body", req.body);

@@ -11,8 +11,8 @@ h1 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr  ;
     column-gap: 0.5rem;
     margin-left: 2rem;
 }
@@ -35,6 +35,12 @@ img {
 
 p {
     font-size: 1.3rem;
+}
+
+.more-button{
+   margin-left: 50%;
+   height: 3rem;
+   width: 6rem;
 }
 
 .component {

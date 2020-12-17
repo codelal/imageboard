@@ -6,7 +6,7 @@ const db = spicedPg(
 
 module.exports.getUserData = () => {
     return db.query(
-        `SELECT id, url, username, title, description, created_at FROM images ORDER BY created_at DESC`
+        `SELECT id, url, username, title, description, created_at FROM images ORDER BY id DESC LIMIT 3`
     );
 };
 module.exports.getSingleImage = (imageId) => {
@@ -25,5 +25,18 @@ module.exports.insertUserDataIntoImages = (
     return db.query(
         `INSERT INTO images (url, username, title, description) VALUES($1, $2, $3, $4)`,
         [url, username, title, description]
+    );
+};
+
+module.exports.getMoreImages = (lastId) => {
+    return db.query(
+        `SELECT url, title, id, (
+     SELECT id FROM images
+     ORDER BY id ASC
+     LIMIT 3
+ ) AS "lowestId" FROM images
+ WHERE id < $1
+ ORDER BY id DESC
+ LIMIT 3`,[lastId]
     );
 };

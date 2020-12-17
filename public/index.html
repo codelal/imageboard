@@ -10,17 +10,12 @@
      <!-- Main element has access to Vue logic -->
     <div id = "main">
         <form method="POST" action="/upload" enctype="multipart/form-data">
-             <!-- Bind the input value to the Vue instance with `v-model` -->
-             <!-- Alternative:v-bind:value="title -- one way of binding, wert kann so aber nur über meinen Code, nicht über user geändert werden/-->
             <input name ="title" placeholder="Title" type ="text" v-model="title">
             <input name ="imageDescription" placeholder="Image Description"type ="text" v-model="imageDescription">
             <input name ="userName" placeholder="username"type ="text" v-model="userName">
             <input name ="file" type ="file" accept ="image/*" @change="handleFileChange">
-            <!--während Textfeldeingaben über v-model übermittelt werden können, bedürfen files changemethode + Funktion, in der dann der change am event-objekt-property "file" regestriert werden kann -->
 
             <button @click="handleUpload">Upload</button>
-            <!-- Also available: -->
-        <!-- <button @click.prevent.default="upload">Upload</button> -->
         </form>
 
         <div class="grid-container">
@@ -28,14 +23,18 @@
                 <img :src="image.url"/>
                 <p>{{image.title}}</p>
             </div>
+            
+   </form>
         </div>
+          <button class="more-button" @click="showMoreImages">More</button>
           <!-- this is where I render my component (inside Main) -->
         <vue-component
             v-if="imageId"
             :image-id="imageId"
           @close="closeImage"
          ></vue-component>   
-   
+   <form method="POST">
+        
         
     </div>
        <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
@@ -46,6 +45,7 @@
             <p>{{description}}</p>
             <p>{{username}}</p>
             <p>{{createdAt}}</p>
+         
            <div@click="closeModal">Close the image</div>
         </div>
       

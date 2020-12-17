@@ -33,16 +33,20 @@
         <vue-component
             v-if="imageId"
             :image-id="imageId"
-          
-         > </vue-component>   <!-- @close="closeImage"-->
+          @close="closeImage"
+         ></vue-component>   
    
         
     </div>
        <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
     <script id = "template" type ="text/x-template">
         <div class ="component">
-
-           <!-- <div@click="closeModal">Close the image</div>--> 
+            <h3>{{title}}</h3>
+           <img class="clicked - image" :src="url"/>
+            <p>{{description}}</p>
+            <p>{{username}}</p>
+            <p>{{createdAt}}</p>
+           <div@click="closeModal">Close the image</div>
         </div>
       
              

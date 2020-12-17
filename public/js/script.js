@@ -14,12 +14,12 @@
                 title: "",
                 description: "",
                 username: "",
-                created_at: "",
+                createdAt: "",
             };
         },
         mounted: function () {
             var self = this;
-            console.log("props id in vue component", self.imageId);
+            console.log("props id in vue component", self);
 
             axios
                 .get("/main/" + self.imageId)
@@ -30,7 +30,7 @@
                     self.title = res.data[0].title;
                     self.description = res.data[0].description;
                     self.username = res.data[0].username;
-                    self.created_at = res.data[0].created_at;
+                    self.createdAt = res.data[0].created_at;
                 })
                 .catch(function (err) {
                     console.log("error in axios get main/image:", err);

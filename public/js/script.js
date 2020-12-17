@@ -10,7 +10,11 @@
         props: ["imageId"],
         data: function () {
             return {
-                //image here, but how get the data?
+                url: "",
+                title: "",
+                description: "",
+                username: "",
+                created_at: "",
             };
         },
         mounted: function () {
@@ -18,20 +22,15 @@
             console.log("props id in vue component", self.imageId);
 
             axios
-                .get("/image/", self.imageId)
+                .get("/main/" + self.imageId)
                 .then(function (res) {
-                    self.fullScreenImage = res.data;
-                    // console.log(res);
-                    // console.log((self.url = res.data[0].url));
-                    // console.log((self.title = res.data[0].title));
-                    // console.log((self.description = res.data[0].description));
-                    // console.log((self.username = res.data[0].username));
-                    // console.log((self.created_at = res.data[0].created_at));
-
-                    // console.log(
-                    //     "get the image and show self works",
-                    //     self.title
-                    // );
+                    // self.fullScreenImage = res.data[0];
+                    console.log("res from axios", res);
+                    self.url = res.data[0].url;
+                    self.title = res.data[0].title;
+                    self.description = res.data[0].description;
+                    self.username = res.data[0].username;
+                    self.created_at = res.data[0].created_at;
                 })
                 .catch(function (err) {
                     console.log("error in axios get main/image:", err);
@@ -107,7 +106,7 @@
             getIdbyClick: function (id) {
                 // console.log("click in  getIdbyClick");
                 this.imageId = id;
-                // console.log("this imageId is", this.imageId);
+                //  console.log("this imageId is", this.imageId);
             },
             closeImage: function () {
                 //  set id to null

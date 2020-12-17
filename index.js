@@ -39,16 +39,26 @@ const uploader = multer({
 
 app.use(express.static("public"));
 
-app.get("/:image", (req, res) => {
-    const { image } = req.params;
+app.get("/main", (req, res) => {
     db.getUserData()
         .then(({ rows }) => {
-            console.log("rows", rows);
+            // console.log("rows", rows);
             res.json(rows);
         })
         .catch((err) => {
             console.log(err);
         });
+});
+
+app.get("/main/:imageId", (req, res) => {
+    const { imageId } = req.params;
+    console.log("imageId vom req.body", imageId);
+    db.getSingleImage(imageId).then(({ rows }) => {
+        console.log("rows single Image", rows);
+        res.json(rows);
+    }).catch((err)=>{
+        console.log(err);
+    });
 });
 
 // "/upload" POST route to handle the image upload ----------------------------

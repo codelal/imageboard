@@ -13,8 +13,6 @@ app.use(
     })
 );
 
-// Multer configurations
-// Specify file names and destinations
 app.use(express.json());
 
 const diskStorage = multer.diskStorage({
@@ -74,9 +72,27 @@ app.get("/more/:latestId", (req, res) => {
         });
 });
 
+app.get("/comments/:imageId", (req, res) => {
+    const { imageId } = req.params;
+    console.log("imageId comments", imageId);
+    console.log("req.body", req.body);
+    db.getComments(imageId)
+        .then(({ rows }) => {
+            console.log("res from getComments", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error from getComments", err);
+        });
+});
+
+app.post("/comments", (req, res) => {
+    db.insertComments().then(({ rows }) => {
+        console.log(rows);
+    });
+});
+
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    // console.log("upload req.body", req.body);
-    // console.log("upload req.file filename", req.file); //multer sets up a file property on req object
     const { userName, title, description } = req.body;
     // console.log(title, userName, description);
     const url = `${config.s3Url}${req.file.filename}`;

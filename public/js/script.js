@@ -1,5 +1,37 @@
 //console.log("sanity check");
 (function () {
+    Vue.component("comments-component", {
+        template: "#childTemplate",
+        props: ["imageId"],
+        data: function () {
+            return {
+                comments: [],
+                name: "",
+                comment: "",
+            };
+        },
+        mounted: function () {
+            var self = this;
+            // console.log("mounted in childComponent works", this.imageId);
+
+            axios
+                .get("/comments/" + this.imageId)
+                .then(function (res) {
+                    console.log(res);
+                    self.comments = res.data;
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        },
+        methods: {
+            sendComments: function () {
+                console.log("sendComments works");
+                axios.post("/comments");
+            },
+        },
+    });
+
     Vue.component("vue-component", {
         template: "#template",
         props: ["imageId"],
@@ -14,7 +46,7 @@
         },
         mounted: function () {
             var self = this;
-            // console.log("props id in vue component", self);
+            // console.log("props id in vue component", self.imageId);
 
             axios
                 .get("/main/" + self.imageId)
@@ -56,7 +88,6 @@
                 .get("/main")
                 .then(function (res) {
                     self.images = res.data;
-                    // console.log("self.images", self.images);
                 })
                 .catch(function (err) {
                     console.log("error:", err);

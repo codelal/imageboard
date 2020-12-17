@@ -37,6 +37,21 @@ module.exports.getMoreImages = (lastId) => {
  ) AS "lowestId" FROM images
  WHERE id < $1
  ORDER BY id DESC
- LIMIT 3`,[lastId]
+ LIMIT 3`,
+        [lastId]
+    );
+};
+
+module.exports.getComments = (imageId) => {
+    return db.query(
+        `SELECT comment, created_at FROM comments WHERE image_id=$1 ORDER BY id DESC`,
+        [imageId]
+    );
+};
+
+module.exports.insertComments = (imageId, username, comment) => {
+    return db.query(
+        `INSERT INTO comments (username, comment) VALUES ($1, $2) WHERE image_id=$3`,
+        [imageId, username, comment]
     );
 };

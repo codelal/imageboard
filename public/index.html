@@ -33,9 +33,7 @@
             :image-id="imageId"
           @close="closeImage"
          ></vue-component>   
-   <form method="POST">
-        
-        
+ 
     </div>
        <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
     <script id = "template" type ="text/x-template">
@@ -45,13 +43,25 @@
             <p>{{description}}</p>
             <p>{{username}}</p>
             <p>{{createdAt}}</p>
-         
+            <comments-component
+                 :image-id="imageId"
+           ></comments-component">
            <div@click="closeModal">Close the image</div>
-        </div>
-      
-             
+        </div>    
     </script>
     
+ <script id = "childTemplate" type ="text/x-template">
+        <div class ="comments-component">
+           <h2>this is child component</h2>
+              <form method="POST" action="/upload" enctype="multipart/form-data">
+            <input name ="name" placeholder="name"type ="text" v-model="name">
+           <input name ="comment" placeholder="comment"type ="text" v-model="comment">
+            <button @click="sendComments">Post Comment</button>
+        </form>
+
+        </div>    
+    </script>
+
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>

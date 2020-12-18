@@ -17,13 +17,14 @@
             axios
                 .get("/comments/" + this.imageId)
                 .then(function (res) {
-                    console.log("get/comments", res.data);
+                    // console.log("get/comments", res.data);
                     self.comments = res.data;
                 })
                 .catch(function (err) {
                     console.log(err);
                 });
         },
+
         methods: {
             postComments: function (event) {
                 var self = this;
@@ -79,6 +80,31 @@
                     console.log("error in axios get main/image:", err);
                 });
         },
+
+        // not sure if its right and its not finished yet
+        //check if id exist and if not, close modal doenst work
+        watch: {
+            imgId: function () {
+                console.log("imgId prop updated");
+                var self = this;
+                axios
+                    .get("/main/" + self.imageId)
+                    .then(function (res) {
+                        // self.fullScreenImage = res.data[0];
+                        //  console.log("res from axios", res);
+                        self.url = res.data[0].url;
+                        self.title = res.data[0].title;
+                        self.description = res.data[0].description;
+                        self.username = res.data[0].username;
+                        self.createdAt = res.data[0].created_at;
+                    })
+                    .catch(function (err) {
+                        console.log("error in axios get main/image:", err);
+                        self.$emit("close");
+                    });
+            },
+        },
+
         methods: {
             closeModal: function () {
                 // console.log("closeModal is running!");
@@ -96,7 +122,7 @@
             userName: "",
             imageDescription: "",
             file: null,
-            imageId: null,
+            imageId: location.hash.slice(1),
         },
         mounted: function () {
             var self = this;
@@ -108,6 +134,12 @@
                 .catch(function (err) {
                     console.log("error:", err);
                 });
+
+            addEventListener("hashchange", function () {
+                //  console.log("hash has changed to actual Id of the image");
+                //  console.log(self.imageId);
+                self.imageId = location.hash.slice(1);
+            });
         },
         methods: {
             handleFileChange: function (event) {
@@ -132,15 +164,11 @@
                         console.log(err);
                     });
             },
-            getIdbyClick: function (id) {
-                this.imageId = id;
-                // console.log(this.imageId);
-            },
+
             closeImage: function () {
                 this.imageId = null;
-                // console.log(
-                //     "closeImage in the instance / parent is running! This was emitted from the component"
-                // );
+                location.hash = "";
+                history.pushState({}, "", "/");
             },
             showMoreImages: function () {
                 var self = this;

@@ -51,7 +51,8 @@ app.get("/main/:imageId", (req, res) => {
     //console.log("imageId vom req.body", imageId);
     db.getSingleImage(imageId)
         .then(({ rows }) => {
-            //console.log("rows get single Image", rows);
+            console.log("rows get single Image", rows);
+
             res.json(rows);
         })
         .catch((err) => {
@@ -64,7 +65,7 @@ app.get("/more/:latestId", (req, res) => {
     //console.log("latesId", latestId);
     db.getMoreImages(latestId)
         .then(({ rows }) => {
-            console.log("rows get more Images", rows);
+            //  console.log("rows get more Images", rows);
             res.json(rows);
         })
         .catch((err) => {

@@ -19,8 +19,7 @@
         </form>
 
         <div class="grid-container">
-            <div v-for="image in images" @click="getIdbyClick(image.id)">
-                <img :src="image.url"/>
+            <div v-for="image in images"><a :href="'#' + image.id" alt="image"> <img :src="image.url" alt="image"/></a>
                 <p>{{image.title}}</p>
             </div>
             
@@ -38,12 +37,12 @@
        <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
     <script id = "template" type ="text/x-template">
         <div class ="component">
-             <div@click="closeModal">Close the image</div>
+            <div @click="closeModal">Close the image</div>
             <h3>{{title}}</h3>
            <img class="clicked - image" :src="url"/>
-            <p>{{description}}</p>
+             <p>{{createdAt}}</p>
             <p>{{username}}</p>
-            <p>{{createdAt}}</p>
+            <p>{{description}}</p>
             <comments-component
                  :image-id="imageId"
            ></comments-component">

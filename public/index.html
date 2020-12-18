@@ -38,6 +38,7 @@
        <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
     <script id = "template" type ="text/x-template">
         <div class ="component">
+             <div@click="closeModal">Close the image</div>
             <h3>{{title}}</h3>
            <img class="clicked - image" :src="url"/>
             <p>{{description}}</p>
@@ -46,7 +47,7 @@
             <comments-component
                  :image-id="imageId"
            ></comments-component">
-           <div@click="closeModal">Close the image</div>
+          
         </div>    
     </script>
     
@@ -56,9 +57,11 @@
               <form method="POST" action="/upload" enctype="multipart/form-data">
             <input name ="name" placeholder="name"type ="text" v-model="name">
            <input name ="comment" placeholder="comment"type ="text" v-model="comment">
-            <button @click="sendComments">Post Comment</button>
+            <button @click="postComments">Post Comment</button>
         </form>
-
+      <div v-for="comment in comments">
+                <p class ="single-comment">{{comment.name}} {{comment.comment}} {{comment.created_at}}</p>
+      </div>
         </div>    
     </script>
 

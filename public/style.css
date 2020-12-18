@@ -12,7 +12,7 @@ h1 {
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr  ;
+    grid-template-rows: 1fr 1fr 1fr;
     column-gap: 0.5rem;
     margin-left: 2rem;
 }
@@ -37,14 +37,14 @@ p {
     font-size: 1.3rem;
 }
 
-#more-button{
-   margin-left: 50%;
-   height: 3rem;
-   width: 6rem;
+#more-button {
+    margin-left: 50%;
+    height: 3rem;
+    width: 6rem;
 }
 
-.hidden{
-  visibility: hidden;
+.hidden {
+    visibility: hidden;
 }
 
 .component {
@@ -56,8 +56,11 @@ p {
     bottom: 0;
 }
 
+.comments-component {
+    border: 0.1rem solid black;
+}
 
-
-.comments-component{
-border: 0.1rem solid black;
+.single-comment {
+    border: 0.1rem solid black;
+    height: 2rem;
 }

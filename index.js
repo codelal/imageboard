@@ -61,7 +61,7 @@ app.get("/main/:imageId", (req, res) => {
 
 app.get("/more/:latestId", (req, res) => {
     const { latestId } = req.params;
-    console.log("latesId", latestId);
+    //console.log("latesId", latestId);
     db.getMoreImages(latestId)
         .then(({ rows }) => {
             console.log("rows get more Images", rows);
@@ -74,22 +74,33 @@ app.get("/more/:latestId", (req, res) => {
 
 app.get("/comments/:imageId", (req, res) => {
     const { imageId } = req.params;
-    console.log("imageId comments", imageId);
-    console.log("req.body", req.body);
+    //  console.log("imageId comments", imageId);
     db.getComments(imageId)
         .then(({ rows }) => {
-            console.log("res from getComments", rows);
+            // console.log("res from getComments", rows);
             res.json(rows);
         })
         .catch((err) => {
-            console.log("error from getComments", err);
+            console.log("error in getComments", err);
         });
 });
 
 app.post("/comments", (req, res) => {
-    db.insertComments().then(({ rows }) => {
-        console.log(rows);
-    });
+    //   console.log("/comments req.body", req.body);
+    const { comment, name, imageId } = req.body;
+    // console.log(name, comment, imageId);
+    db.insertComments(name, comment, imageId)
+        .then(({ rows }) => {
+            // console.log("res from insert comments", rows[0].created_at);
+            res.json({
+                name: name,
+                comment: comment,
+                created_at: rows[0].created_at,
+            });
+        })
+        .catch((err) => {
+            console.log("error in insertComments", err);
+        });
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
@@ -97,9 +108,10 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     // console.log(title, userName, description);
     const url = `${config.s3Url}${req.file.filename}`;
     // console.log("imageUrl", imageUrl);
+
     db.insertUserDataIntoImages(url, userName, title, description)
-        .then(() => {
-            //  console.log("result from insertUserDataIntoImages", result);
+        .then((result) => {
+            console.log("result from insertUserDataIntoImages", result);
             if (req.file) {
                 res.json({
                     url: url,

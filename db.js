@@ -44,14 +44,14 @@ module.exports.getMoreImages = (lastId) => {
 
 module.exports.getComments = (imageId) => {
     return db.query(
-        `SELECT comment, created_at FROM comments WHERE image_id=$1 ORDER BY id DESC`,
+        `SELECT  comment, name, created_at FROM comments WHERE image_id =$1 ORDER BY id DESC`,
         [imageId]
     );
 };
 
-module.exports.insertComments = (imageId, username, comment) => {
+module.exports.insertComments = (name, comment, imageId) => {
     return db.query(
-        `INSERT INTO comments (username, comment) VALUES ($1, $2) WHERE image_id=$3`,
-        [imageId, username, comment]
+        `INSERT INTO comments (name, comment, image_id) VALUES($1, $2, $3) RETURNING created_at`,
+        [name, comment, imageId]
     );
 };

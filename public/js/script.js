@@ -17,7 +17,7 @@
             axios
                 .get("/comments/" + this.imageId)
                 .then(function (res) {
-                    console.log(res);
+                    console.log("get/comments", res.data);
                     self.comments = res.data;
                 })
                 .catch(function (err) {
@@ -25,9 +25,25 @@
                 });
         },
         methods: {
-            sendComments: function () {
+            postComments: function (event) {
+                var self = this;
                 console.log("sendComments works");
-                axios.post("/comments");
+                event.preventDefault();
+                var commentsData = {
+                    name: this.name,
+                    comment: this.comment,
+                    imageId: this.imageId,
+                };
+                // console.log("commentsData", commentsData);
+                axios
+                    .post("/comments", commentsData)
+                    .then(function (res) {
+                        console.log("res.data from post/comments", res.data);
+                        self.comments.unshift(res.data);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
             },
         },
     });
@@ -98,6 +114,7 @@
                 this.file = event.target.files[0];
             },
             handleUpload: function (event) {
+                var self = this;
                 event.preventDefault();
                 var formData = new FormData();
                 formData.append("title", this.title);
@@ -107,9 +124,9 @@
 
                 axios
                     .post("/upload", formData)
-                    .then((res) => {
+                    .then(function (res) {
                         // console.log("response from upload", res.data);
-                        this.images.unshift(res.data);
+                        self.images.unshift(res.data);
                     })
                     .catch((err) => {
                         console.log(err);

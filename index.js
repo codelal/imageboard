@@ -51,7 +51,7 @@ app.get("/main/:imageId", (req, res) => {
     //console.log("imageId vom req.body", imageId);
     db.getSingleImage(imageId)
         .then(({ rows }) => {
-            console.log("rows get single Image", rows);
+            //  console.log("rows get single Image", rows);
 
             res.json(rows);
         })
@@ -112,7 +112,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 
     db.insertUserDataIntoImages(url, userName, title, description)
         .then((result) => {
-            console.log("result from insertUserDataIntoImages", result);
+            //  console.log("result from insertUserDataIntoImages", result);
             if (req.file) {
                 res.json({
                     url: url,

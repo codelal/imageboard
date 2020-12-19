@@ -24,6 +24,21 @@
                     console.log(err);
                 });
         },
+        watch: {
+            imgId: function () {
+                console.log("imgId prop updated");
+                var self = this;
+                axios
+                    .get("/comments/" + this.imageId)
+                    .then(function (res) {
+                        // console.log("get/comments", res.data);
+                        self.comments = res.data;
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            },
+        },
 
         methods: {
             postComments: function (event) {

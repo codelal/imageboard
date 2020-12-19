@@ -6,7 +6,7 @@ const db = spicedPg(
 
 module.exports.getUserData = () => {
     return db.query(
-        `SELECT id, url, username, title, description, created_at FROM images ORDER BY id DESC LIMIT 3`
+        `SELECT id, url, username, title, description, created_at FROM images ORDER BY id DESC LIMIT 9`
     );
 };
 module.exports.getSingleImage = (imageId) => {

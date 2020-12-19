@@ -1,25 +1,46 @@
 * {
-    background-color: rgb(233, 233, 249);
     margin: 0;
     box-sizing: border-box;
+    font-family:Unna;
+    text-transform: uppercase;
+    color:rgb(253, 251, 251);
+    background-color:rgb(232, 228, 228);
+   
 }
 
 h1 {
-    margin-left: 2rem;
+    margin-left: 3rem;
     margin-top: 2rem;
+}
+
+.main-input{
+    border: 0.1rem solid black;
+    margin-left: 3rem;
+}
+
+input{
+    height:2rem;
+    width: 15Rem;
+}
+
+
+
+h3 {
+    font-size: 1.5rem;
+    margin-left: 3rem;
+    margin-bottom: 2rem;
 }
 
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    column-gap: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: center;
     margin-left: 2rem;
 }
 
-h3 {
-    font-size: 1.5rem;
-    margin: 2rem;
+.grid {
+    width: 21rem;
 }
 
 input {
@@ -28,13 +49,15 @@ input {
 
 img {
     border-radius: 10px;
-    width: 250px;
-    height: 250px;
+    width: 20rem;
+    height: 20rem;
     object-fit: cover;
 }
 
 p {
     font-size: 1.3rem;
+    width: 15rem;
+    margin-bottom: 1rem;
 }
 
 #more-button {
@@ -48,19 +71,72 @@ p {
 }
 
 .component {
+    background-color: grey;
     border: 0.2rem solid black;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3rem 30rem 3rem 3rem;
+} 
+
+
+.closeX{
+    margin-right: 1rem;
+    margin-left: 96%;
+    font-size: 1.5rem;
 }
+
+h2{
+    margin-left: 3rem;
+    margin-bottom: 1rem;
+    width:20rem;
+}
+
+.clicked-image{
+height: 28rem;
+width: 28rem;
+margin-left: 3rem;
+margin-bottom: 1rem;
+}
+
+
+.img-description{
+width: 30rem;
+height:20rem;
+}
+p{
+margin-left: 3rem;
+width: 20rem;
+height: 3rem;
+border: 0.2rem solid black;
+}
+
 
 .comments-component {
     border: 0.1rem solid black;
+    height: 100vh;
 }
 
 .single-comment {
     border: 0.1rem solid black;
     height: 2rem;
+}
+
+
+
+@media screen and (min-width: 1px) and (max-width: 800px) {
+    * {
+        background-color: black;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: dens;
+        justify-content: center;
+        margin-left: 2rem;
+    }
 }

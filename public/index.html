@@ -2,24 +2,27 @@
 <html>
 <head>
     <link rel="stylesheet" href="/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700;800&family=M+PLUS+Rounded+1c:wght@300;400;500;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Open+Sans+Condensed:ital,wght@0,700;1,300&family=Palanquin:wght@200;300;400&family=Unna:ital,wght@0,700;1,400;1,700&display=swap" rel="stylesheet"> 
     <title></title>
 </head>
 <body>
     <h1>Welcome to this wounderful Imageboard</h1>
-    <h3>Latest Images</h3>
+   
      <!-- Main element has access to Vue logic -->
     <div id = "main">
+        <div class ="main-input">
         <form method="POST" action="/upload" enctype="multipart/form-data">
             <input name ="title" placeholder="Title" type ="text" v-model="title">
             <input name ="imageDescription" placeholder="Image Description"type ="text" v-model="imageDescription">
             <input name ="userName" placeholder="username"type ="text" v-model="userName">
+            </div>
             <input name ="file" type ="file" accept ="image/*" @change="handleFileChange">
-
             <button @click="handleUpload">Upload</button>
         </form>
 
+ <h3>Latest Images</h3>
         <div class="grid-container">
-            <div v-for="image in images"><a :href="'#' + image.id" alt="image"> <img :src="image.url" alt="image"/></a>
+            <div class = "grid" v-for="image in images"><a :href="'#' + image.id" alt="image"> <img :src="image.url" alt="image"/></a>
                 <p>{{image.title}}</p>
             </div>
             
@@ -35,24 +38,27 @@
  
     </div>
        <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
+      
     <script id = "template" type ="text/x-template">
         <div class ="component">
-            <div @click="closeModal">Close the image</div>
-            <h3>{{title}}</h3>
-           <img class="clicked - image" :src="url"/>
-             <p>{{createdAt}}</p>
-            <p>{{username}}</p>
-            <p>{{description}}</p>
+            <h2>{{title}}</h2> 
+            <div class="closeX" @click="closeModal">X</div>
+           <img class="clicked-image" :src="url"/>
             <comments-component
                  :image-id="imageId"
            ></comments-component">
+           <div class="img-description">
+             <p>{{createdAt}}</p>
+            <p>{{username}}</p>
+            <p>{{description}}</p>
+           </div>
           
+           
         </div>    
     </script>
     
  <script id = "childTemplate" type ="text/x-template">
         <div class ="comments-component">
-           <h2>this is child component</h2>
               <form method="POST" action="/upload" enctype="multipart/form-data">
             <input name ="name" placeholder="name"type ="text" v-model="name">
            <input name ="comment" placeholder="comment"type ="text" v-model="comment">

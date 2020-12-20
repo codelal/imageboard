@@ -42,7 +42,7 @@
         methods: {
             postComments: function (event) {
                 var self = this;
-                console.log("sendComments works");
+                //console.log("sendComments works");
                 event.preventDefault();
                 var commentsData = {
                     name: this.name,
@@ -53,7 +53,7 @@
                 axios
                     .post("/comments", commentsData)
                     .then(function (res) {
-                        console.log("res.data from post/comments", res.data);
+                        // console.log("res.data from post/comments", res.data);
                         self.comments.unshift(res.data);
                     })
                     .catch(function (err) {
@@ -137,6 +137,7 @@
             description: "",
             file: null,
             imageId: location.hash.slice(1),
+            id: "",
         },
         mounted: function () {
             var self = this;
@@ -187,7 +188,7 @@
                 axios
                     .post("/upload", formData)
                     .then(function (res) {
-                        // console.log("response from upload", res.data);
+                        console.log("response from upload", res.data);
                         self.images.unshift(res.data);
                     })
                     .catch((err) => {

@@ -52,7 +52,7 @@ app.get("/main/:imageId", (req, res) => {
 
     db.getSingleImage(imageId)
         .then(({ rows }) => {
-              console.log("rows get single Image", rows);
+            console.log("rows get single Image", rows);
 
             res.json(rows);
         })
@@ -112,14 +112,15 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     // console.log("imageUrl", imageUrl);
 
     db.insertUserDataIntoImages(url, userName, title, description)
-        .then((result) => {
-            //  console.log("result from insertUserDataIntoImages", result);
+        .then(({ rows }) => {
+            console.log("result from insertUserDataIntoImages", rows);
             if (req.file) {
                 res.json({
                     url: url,
                     userName: userName,
                     title: title,
                     description: description,
+                    id: rows[0].id
                 });
             } else {
                 res.json({ sucess: false });

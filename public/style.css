@@ -3,13 +3,14 @@
     box-sizing: border-box;
     font-family: Unna;
     text-transform: uppercase;
-color:white;
-    background-color: rgb(236, 232, 232);
+    color: rgb(246, 245, 245);
+    background-color: rgb(30, 29, 29);
 }
 
 h1 {
     margin-left: 3rem;
     margin-top: 2rem;
+    font-weight:10;
 }
 
 .main-input {
@@ -146,7 +147,9 @@ p {
 
 .single-comment {
     border: 0.1rem solid black;
-    height: 2rem;
+    height: 10rem;
+    width: 30rem;
+    margin:1rem;
 }
 
 @media screen and (min-width: 1px) and (max-width: 800px) {

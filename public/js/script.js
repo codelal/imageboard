@@ -1,5 +1,14 @@
 //console.log("sanity check");
 (function () {
+    function newDate(createdAt) {
+        var date = "";
+        date += createdAt;
+        var dateOne = date.slice(0, 10);
+        var dateTwo = date.slice(11, 16);
+        var fullDate = `${dateOne} ${dateTwo}`;
+        return fullDate;
+    }
+
     Vue.component("comments-component", {
         template: "#childTemplate",
         props: ["imageId"],
@@ -16,7 +25,7 @@
             axios
                 .get("/comments/" + this.imageId)
                 .then(function (res) {
-                    // console.log("get/comments", res.data);
+                    console.log("get/comments", res.data);
                     self.comments = res.data;
                 })
                 .catch(function (err) {
@@ -53,7 +62,7 @@
                 axios
                     .post("/comments", commentsData)
                     .then(function (res) {
-                        // console.log("res.data from post/comments", res.data);
+                        console.log("res.data from post/comments", res.data);
                         self.comments.unshift(res.data);
                     })
                     .catch(function (err) {
@@ -82,14 +91,15 @@
             axios
                 .get("/main/" + self.imageId)
                 .then(function (res) {
-                    // self.fullScreenImage = res.data[0];
-                    //  console.log("res from axios", res);
+                    var fullDate = newDate(res.data[0].created_at);
+                    console.log("fulldate", fullDate);
+
                     self.url = res.data[0].url;
                     self.title = res.data[0].title;
                     self.description = res.data[0].description;
                     console.log("description", res.data[0].description);
                     self.username = res.data[0].username;
-                    self.createdAt = res.data[0].created_at;
+                    self.createdAt = fullDate;
                 })
                 .catch(function (err) {
                     console.log("error in axios get main/image:", err);
@@ -106,11 +116,14 @@
                     .then(function (res) {
                         // self.fullScreenImage = res.data[0];
                         //  console.log("res from axios", res);
+                        var fullDate = newDate(res.data[0].created_at);
+                        console.log("fulldate", fullDate);
+
                         self.url = res.data[0].url;
                         self.title = res.data[0].title;
                         self.description = res.data[0].description;
                         self.username = res.data[0].username;
-                        self.createdAt = res.data[0].created_at;
+                        self.createdAt = fullDate;
                     })
                     .catch(function (err) {
                         console.log("error in axios get main/image:", err);
@@ -165,19 +178,15 @@
                 var label = document.getElementById("label");
                 //console.log(label);
 
-                upload[0].addEventListener("change", function (event) {
-                    console.log("event", event);
-
+                upload[0].addEventListener("change", function () {
                     if (self.file) {
-                        console.log("there is a file", self.file.name);
                         label.innerHTML = self.file.name;
-                    } else {
-                        console.log("no File");
                     }
                 });
             },
             handleUpload: function (event) {
                 var self = this;
+
                 event.preventDefault();
                 var formData = new FormData();
                 formData.append("title", this.title);
@@ -188,8 +197,9 @@
                 axios
                     .post("/upload", formData)
                     .then(function (res) {
-                        console.log("response from upload", res.data);
+                        // console.log("response from upload", res.data);
                         self.images.unshift(res.data);
+                        console.log(this);
                     })
                     .catch((err) => {
                         console.log(err);

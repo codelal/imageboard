@@ -52,8 +52,7 @@ app.get("/main/:imageId", (req, res) => {
 
     db.getSingleImage(imageId)
         .then(({ rows }) => {
-            console.log("rows get single Image", rows);
-
+            // console.log("rows get single Image", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -93,11 +92,14 @@ app.post("/comments", (req, res) => {
     // console.log(name, comment, imageId);
     db.insertComments(name, comment, imageId)
         .then(({ rows }) => {
-            // console.log("res from insert comments", rows[0].created_at);
+            // var date = "";
+            // date += rows[0].created_at;
+            // var newDate = date.slice(0, 21);
+
             res.json({
                 name: name,
                 comment: comment,
-                created_at: rows[0].created_at,
+                created_at:rows[0].created_at,
             });
         })
         .catch((err) => {
@@ -113,14 +115,14 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 
     db.insertUserDataIntoImages(url, userName, title, description)
         .then(({ rows }) => {
-            console.log("result from insertUserDataIntoImages", rows);
+            // console.log("result from insertUserDataIntoImages", rows);
             if (req.file) {
                 res.json({
                     url: url,
                     userName: userName,
                     title: title,
                     description: description,
-                    id: rows[0].id
+                    id: rows[0].id,
                 });
             } else {
                 res.json({ sucess: false });

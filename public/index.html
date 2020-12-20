@@ -12,15 +12,15 @@
     <div id = "main">
         <div class ="main-input">
         <form method="POST" action="/upload" enctype="multipart/form-data">
-            <input name ="title" placeholder="Title" autocomplete="off" type ="text" v-model="title">
-            <input name ="description" placeholder="Image Description" autocomplete="off" type ="text" v-model="description">
-            <input name ="userName" placeholder="username" autocomplete="off" type ="text" v-model="userName">
+            <input id="inputtext" name ="title" placeholder="Title" autocomplete="off" type ="text" v-model="title">
+            <input class="inputtext" name ="description" placeholder="Image Description" autocomplete="off" type ="text" v-model="description">
+            <input class="inputtext" name ="userName" placeholder="username" autocomplete="off" type ="text" v-model="userName">
             </div>
             <div class="upload">
             <input id="inputfile"  class="inputfile" name ="file" type ="file" accept ="image/*" @change="handleFileChange">
             <label id="label" for="inputfile">Choose an Image</label>
-            <button @click="handleUpload"><a href="/">Upload</a></button>
-            <!--<span id ="filename">"No file choosen</span>-->
+            <button @click="handleUpload">Upload</button>
+           
         </div>
         </form>
 

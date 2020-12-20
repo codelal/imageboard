@@ -13,7 +13,6 @@
         mounted: function () {
             var self = this;
             // console.log("mounted in childComponent works", this.imageId);
-
             axios
                 .get("/comments/" + this.imageId)
                 .then(function (res) {
@@ -25,8 +24,8 @@
                 });
         },
         watch: {
-            imgId: function () {
-                console.log("imgId prop updated");
+            imageId: function () {
+                //console.log("imgId prop updated");
                 var self = this;
                 axios
                     .get("/comments/" + this.imageId)
@@ -88,19 +87,19 @@
                     self.url = res.data[0].url;
                     self.title = res.data[0].title;
                     self.description = res.data[0].description;
+                    console.log("description", res.data[0].description);
                     self.username = res.data[0].username;
                     self.createdAt = res.data[0].created_at;
                 })
                 .catch(function (err) {
                     console.log("error in axios get main/image:", err);
+                    self.$emit("close");
                 });
         },
 
-        // not sure if its right and its not finished yet
-        //check if id exist and if not, close modal doenst work
         watch: {
-            imgId: function () {
-                console.log("imgId prop updated");
+            imageId: function () {
+                // console.log("imgId prop updated");
                 var self = this;
                 axios
                     .get("/main/" + self.imageId)
@@ -135,7 +134,7 @@
             images: [],
             title: "",
             userName: "",
-            imageDescription: "",
+            description: "",
             file: null,
             imageId: location.hash.slice(1),
         },
@@ -167,7 +166,7 @@
                 formData.append("title", this.title);
                 formData.append("file", this.file);
                 formData.append("userName", this.userName);
-                formData.append("imageDescription", this.imageDescription);
+                formData.append("description", this.description);
 
                 axios
                     .post("/upload", formData)

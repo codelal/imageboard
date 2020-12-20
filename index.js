@@ -49,9 +49,10 @@ app.get("/main", (req, res) => {
 app.get("/main/:imageId", (req, res) => {
     const { imageId } = req.params;
     //console.log("imageId vom req.body", imageId);
+
     db.getSingleImage(imageId)
         .then(({ rows }) => {
-            //  console.log("rows get single Image", rows);
+              console.log("rows get single Image", rows);
 
             res.json(rows);
         })
@@ -118,7 +119,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
                     url: url,
                     userName: userName,
                     title: title,
-                    imageDescription: description,
+                    description: description,
                 });
             } else {
                 res.json({ sucess: false });

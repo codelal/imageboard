@@ -12,12 +12,12 @@
     <div id = "main">
         <div class ="main-input">
         <form method="POST" action="/upload" enctype="multipart/form-data">
-            <input name ="title" placeholder="Title" type ="text" v-model="title">
-            <input name ="imageDescription" placeholder="Image Description"type ="text" v-model="imageDescription">
-            <input name ="userName" placeholder="username"type ="text" v-model="userName">
+            <input name ="title" placeholder="Title" autocomplete="off" type ="text" v-model="title">
+            <input name ="description" placeholder="Image Description" autocomplete="off" type ="text" v-model="description">
+            <input name ="userName" placeholder="username" autocomplete="off" type ="text" v-model="userName">
             </div>
             <input name ="file" type ="file" accept ="image/*" @change="handleFileChange">
-            <button @click="handleUpload">Upload</button>
+            <button @click="handleUpload"><a href="/">Upload</a></button>
         </form>
 
  <h3>Latest Images</h3>

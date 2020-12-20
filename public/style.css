@@ -3,7 +3,7 @@
     box-sizing: border-box;
     font-family:Unna;
     text-transform: uppercase;
-    color:rgb(253, 251, 251);
+    
     background-color:rgb(232, 228, 228);
    
 }
@@ -56,7 +56,7 @@ img {
 
 p {
     font-size: 1.3rem;
-    width: 15rem;
+    width: 10rem;
     margin-bottom: 1rem;
 }
 

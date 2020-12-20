@@ -157,7 +157,23 @@
         },
         methods: {
             handleFileChange: function (event) {
-                this.file = event.target.files[0];
+                var self = this;
+                self.file = event.target.files[0];
+                //console.log(this.file);
+                var upload = document.getElementsByClassName("upload");
+                var label = document.getElementById("label");
+                //console.log(label);
+
+                upload[0].addEventListener("change", function (event) {
+                    console.log("event", event);
+
+                    if (self.file) {
+                        console.log("there is a file", self.file.name);
+                        label.innerHTML = self.file.name;
+                    } else {
+                        console.log("no File");
+                    }
+                });
             },
             handleUpload: function (event) {
                 var self = this;

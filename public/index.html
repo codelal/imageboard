@@ -46,7 +46,7 @@
     <script id = "template" type ="text/x-template">
         <div class ="component">
             <h2>{{title}}</h2> 
-            <div class="closeX" @click="closeModal">X</div>
+           <div class="closeX" @click="closeModal">close</div>
            <img class="clicked-image" :src="url"/>
             <comments-component
                  :image-id="imageId"
@@ -55,7 +55,8 @@
              <p class ="p-component">{{createdAt}}h</p>
             <p class ="p-component">Uploaded by: {{username}}</p>
             <p class ="p-component">DESCRIPTION: PAINTING BY {{description}}</p>
-           </div>
+            
+          </div>
           
            
         </div>    

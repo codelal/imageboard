@@ -66,6 +66,7 @@
                         self.comments.unshift(res.data);
                         self.name="";
                         self.comment="";
+                        
                     })
                     .catch(function (err) {
                         console.log(err);
@@ -204,6 +205,9 @@
                         self.title= "";
                         self.description ="";
                         self.userName ="";
+                        var label = document.getElementById("label");
+                        label.innerHTML = "Choose an Image";
+                
                         //console.log(this);
                     })
                     .catch((err) => {

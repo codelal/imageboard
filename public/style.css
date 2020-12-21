@@ -70,15 +70,24 @@ input {
     cursor: pointer;
 }
 
+.upload{
+    width:12rem;
+    margin:0;
+    transform: translateX(-50%);
+    margin-left: 50%;
+  
+}
+
 #upload-button {
-    font-size: 1rem;
+    font-size: 0.8rem;
     width: 6rem;
     height: 2.4rem;
     border: 0;
-    background-color: rgba(37, 97, 37, 0.1);
+    background-color: rgba(37, 97, 37, 0.0);
     border-radius: 3px;
     margin-bottom: 1rem;
     margin-left: 0.7rem;
+    margin-top: 0.3rem;
     border-radius: 4px;
 }
 
@@ -90,8 +99,7 @@ input {
     box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
     border-radius: 3px;
     margin-bottom: 2rem;
-
-    border: 0.1rem solid rgb(126, 146, 126, 0.9);
+    border: 0;
     border-radius: 4px;
 }
 

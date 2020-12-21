@@ -44,7 +44,7 @@ module.exports.getMoreImages = (lastId) => {
 
 module.exports.getComments = (imageId) => {
     return db.query(
-        `SELECT  comment, name, created_at FROM comments WHERE image_id =$1 ORDER BY id DESC`,
+        `SELECT  comment, name FROM comments WHERE image_id =$1 ORDER BY id DESC`,
         [imageId]
     );
 };

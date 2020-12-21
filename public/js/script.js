@@ -186,24 +186,29 @@
             },
             handleUpload: function (event) {
                 var self = this;
-
                 event.preventDefault();
                 var formData = new FormData();
                 formData.append("title", this.title);
                 formData.append("file", this.file);
                 formData.append("userName", this.userName);
                 formData.append("description", this.description);
+                var inputVal = document.getElementsByClassName("inputtext");
+                
 
                 axios
                     .post("/upload", formData)
                     .then(function (res) {
                         // console.log("response from upload", res.data);
                         self.images.unshift(res.data);
-                        console.log(this);
+                        //console.log(this);
                     })
                     .catch((err) => {
                         console.log(err);
                     });
+            },
+
+            deleteInputVal: function () {
+                
             },
 
             closeImage: function () {

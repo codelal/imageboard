@@ -16,9 +16,9 @@
             <input class="inputtext" name ="description" placeholder="Image Description" autocomplete="off" type ="text" v-model="description">
             <input class="inputtext" name ="userName" placeholder="username" autocomplete="off" type ="text" v-model="userName">
             </div>
-            
+            <div class="upload">
             <input id="inputfile"  class="inputfile" name ="file" type ="file" accept ="image/*" @change="handleFileChange">
-            <label id="label" for="inputfile">Choose an Image</label>
+            <label id="label" for="inputfile">Choose an Image</label></div>
             <button id="upload-button" @click="handleUpload">Upload</button>
           
        
@@ -26,13 +26,13 @@
 
  <h3>Latest Images</h3>
         <div class="grid-container">
-            <div class = "grid" v-for="image in images"><a :href="'#' + image.id" alt="image"> <img :src="image.url" alt="image"/></a>
+            <div class = "grid" v-for="image in images"><a :href="'#' + image.id" alt="image"><img :src="image.url" alt="image"/></a>
                 <p>{{image.title}}</p>
             </div>
             
    </form>
         </div>
-          <button id="more-button" @click="showMoreImages">More</button>
+       <button id="more-button" @click="showMoreImages">More</button>
           <!-- this is where I render my component (inside Main) -->
         <vue-component
             v-if="imageId"

@@ -78,7 +78,17 @@ app.get("/comments/:imageId", (req, res) => {
     //  console.log("imageId comments", imageId);
     db.getComments(imageId)
         .then(({ rows }) => {
-            // console.log("res from getComments", rows);
+            console.log("res from getComments", rows);
+            var date = "";
+            // date += rows[0].created_at;
+            // var newDate = date.slice(0, 21);
+            // var name = rows[0].name;
+            // console.log(name);
+            // var comment = rows[0].comment;
+            // console.log(comment);
+            // var formatedDate = newDate;
+            // console.log(formatedDate);
+
             res.json(rows);
         })
         .catch((err) => {
@@ -99,7 +109,7 @@ app.post("/comments", (req, res) => {
             res.json({
                 name: name,
                 comment: comment,
-                created_at:rows[0].created_at,
+                
             });
         })
         .catch((err) => {

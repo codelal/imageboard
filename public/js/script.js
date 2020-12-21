@@ -64,6 +64,8 @@
                     .then(function (res) {
                         console.log("res.data from post/comments", res.data);
                         self.comments.unshift(res.data);
+                        self.name="";
+                        self.comment="";
                     })
                     .catch(function (err) {
                         console.log(err);
@@ -192,14 +194,16 @@
                 formData.append("file", this.file);
                 formData.append("userName", this.userName);
                 formData.append("description", this.description);
-                var inputVal = document.getElementsByClassName("inputtext");
-                
+                 
 
                 axios
                     .post("/upload", formData)
                     .then(function (res) {
                         // console.log("response from upload", res.data);
                         self.images.unshift(res.data);
+                        self.title= "";
+                        self.description ="";
+                        self.userName ="";
                         //console.log(this);
                     })
                     .catch((err) => {
@@ -207,9 +211,6 @@
                     });
             },
 
-            deleteInputVal: function () {
-                
-            },
 
             closeImage: function () {
                 this.imageId = null;

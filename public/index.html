@@ -52,9 +52,9 @@
                  :image-id="imageId"
            ></comments-component">
            <div class="img-description">
-             <p>{{createdAt}}</p>
-            <p>{{username}}</p>
-            <p>{{description}}</p>
+             <p class ="p-component">{{createdAt}}h</p>
+            <p class ="p-component">Uploaded by: {{username}}</p>
+            <p class ="p-component">DESCRIPTION: PAINTING BY {{description}}</p>
            </div>
           
            
@@ -63,13 +63,14 @@
     
  <script id = "childTemplate" type ="text/x-template">
         <div class ="comments-component">
+          <p id ="p-comments">Leave a comment<p>
               <form method="POST" action="/upload" enctype="multipart/form-data">
-            <input name ="name" placeholder="name"type ="text" v-model="name">
-           <input name ="comment" placeholder="comment"type ="text" v-model="comment">
-            <button @click="postComments">Post Comment</button>
+            <input id="comment-name" name ="name" placeholder="name"type ="text" v-model="name">
+           <input id="comment-input" name ="comment" placeholder="comment"type ="text" v-model="comment">
+           <button class="post" @click="postComments">Post</button>
         </form>
       <div v-for="comment in comments">
-                <p class ="single-comment">{{comment.name}} {{comment.comment}} {{comment.created_at}}</p>
+                <div id ="single-comment">{{comment.name}} {{comment.comment}} {{comment.created_at}}</div>
       </div>
         </div>    
     </script>

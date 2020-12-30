@@ -1,13 +1,15 @@
 //console.log("sanity check");
 (function () {
-    function newDate(createdAt) {
-        var date = "";
-        date += createdAt;
-        var dateOne = date.slice(0, 10);
-        var dateTwo = date.slice(11, 16);
-        var fullDate = `${dateOne} ${dateTwo}`;
-        return fullDate;
-    }
+    const formateDateTime = (date) => {
+        return new Intl.DateTimeFormat("en-US", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+        }).format(new Date(date));
+    };
 
     Vue.component("comments-component", {
         template: "#childTemplate",
@@ -17,6 +19,7 @@
                 comments: [],
                 name: "",
                 comment: "",
+                createdAt: "",
             };
         },
         mounted: function () {
@@ -25,8 +28,22 @@
             axios
                 .get("/comments/" + this.imageId)
                 .then(function (res) {
-                    console.log("get/comments", res.data);
-                    self.comments = res.data;
+                    //console.log("get/comments2", res.data);
+                    
+                    var comments = [];
+                    for (var i = 0; i < res.data.length; i++) {
+                        var fullDate = formateDateTime(res.data[i].created_at);
+
+                        var comment = {
+                            comment: res.data[i].comment,
+                            created_at: fullDate,
+                            name: res.data[i].name,
+                        };
+
+                        comments.push(comment);
+                    }
+
+                    self.comments = comments;
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -40,7 +57,22 @@
                     .get("/comments/" + this.imageId)
                     .then(function (res) {
                         // console.log("get/comments", res.data);
-                        self.comments = res.data;
+                        var comments = [];
+                        for (var i = 0; i < res.data.length; i++) {
+                            var fullDate = formateDateTime(
+                                res.data[i].created_at
+                            );
+
+                            var comment = {
+                                comment: res.data[i].comment,
+                                created_at: fullDate,
+                                name: res.data[i].name,
+                            };
+
+                            comments.push(comment);
+                        }
+
+                        self.comments = comments;
                     })
                     .catch(function (err) {
                         console.log(err);
@@ -64,9 +96,10 @@
                     .then(function (res) {
                         console.log("res.data from post/comments", res.data);
                         self.comments.unshift(res.data);
-                        self.name="";
-                        self.comment="";
-                        
+
+
+                        self.name = "";
+                        self.comment = "";
                     })
                     .catch(function (err) {
                         console.log(err);
@@ -94,13 +127,14 @@
             axios
                 .get("/main/" + self.imageId)
                 .then(function (res) {
-                    var fullDate = newDate(res.data[0].created_at);
-                    console.log("fulldate", fullDate);
+                    var fullDate = formateDateTime(res.data[0].created_at);
+                    //console.log("fulldate", fullDate);
+                    //console.log("unformated Date", res.data[0].created_at);
 
                     self.url = res.data[0].url;
                     self.title = res.data[0].title;
                     self.description = res.data[0].description;
-                    console.log("description", res.data[0].description);
+                    // console.log("description", res.data[0].description);
                     self.username = res.data[0].username;
                     self.createdAt = fullDate;
                 })
@@ -119,8 +153,8 @@
                     .then(function (res) {
                         // self.fullScreenImage = res.data[0];
                         //  console.log("res from axios", res);
-                        var fullDate = newDate(res.data[0].created_at);
-                        console.log("fulldate", fullDate);
+                        var fullDate = formateDateTime(res.data[0].created_at);
+                        // console.log("fulldate", fullDate);
 
                         self.url = res.data[0].url;
                         self.title = res.data[0].title;
@@ -195,26 +229,24 @@
                 formData.append("file", this.file);
                 formData.append("userName", this.userName);
                 formData.append("description", this.description);
-                 
 
                 axios
                     .post("/upload", formData)
                     .then(function (res) {
                         // console.log("response from upload", res.data);
                         self.images.unshift(res.data);
-                        self.title= "";
-                        self.description ="";
-                        self.userName ="";
+                        self.title = "";
+                        self.description = "";
+                        self.userName = "";
                         var label = document.getElementById("label");
                         label.innerHTML = "Choose an Image";
-                
+
                         //console.log(this);
                     })
                     .catch((err) => {
                         console.log(err);
                     });
             },
-
 
             closeImage: function () {
                 this.imageId = null;

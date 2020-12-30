@@ -35,6 +35,7 @@ const uploader = multer({
 
 app.use(express.static("public"));
 
+
 app.get("/main", (req, res) => {
     db.getUserData()
         .then(({ rows }) => {
@@ -43,6 +44,7 @@ app.get("/main", (req, res) => {
         })
         .catch((err) => {
             console.log(err);
+            res.json({ sucess: false });
         });
 });
 
@@ -78,21 +80,12 @@ app.get("/comments/:imageId", (req, res) => {
     //  console.log("imageId comments", imageId);
     db.getComments(imageId)
         .then(({ rows }) => {
-            console.log("res from getComments", rows);
-            var date = "";
-            // date += rows[0].created_at;
-            // var newDate = date.slice(0, 21);
-            // var name = rows[0].name;
-            // console.log(name);
-            // var comment = rows[0].comment;
-            // console.log(comment);
-            // var formatedDate = newDate;
-            // console.log(formatedDate);
-
+            //  console.log("res from getComments", rows, rows[0].created_at);
             res.json(rows);
         })
         .catch((err) => {
             console.log("error in getComments", err);
+            res.json({ sucess: false });
         });
 });
 
@@ -102,18 +95,29 @@ app.post("/comments", (req, res) => {
     // console.log(name, comment, imageId);
     db.insertComments(name, comment, imageId)
         .then(({ rows }) => {
-            // var date = "";
-            // date += rows[0].created_at;
-            // var newDate = date.slice(0, 21);
+            const formateDateTime = (date) => {
+                return new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    hour12: true,
+                }).format(new Date(date));
+            };
+
+            var newDate = formateDateTime(rows[0].created_at);
+            console.log("rows from Insert", rows, newDate);
 
             res.json({
-                name: name,
                 comment: comment,
-                
+                name: name,
+                created_at: newDate,
             });
         })
         .catch((err) => {
             console.log("error in insertComments", err);
+            res.json({ sucess: false });
         });
 });
 
@@ -140,6 +144,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         })
         .catch((err) => {
             console.log("error in insertUserDataIntoImages", err);
+            res.json({ sucess: false });
         });
 });
 

@@ -35,6 +35,8 @@
         self.createdAt = fullDate;
         self.prevImg = res.data[0].prevImg;
         self.nextImg = res.data[0].nextImg;
+        self.maxId = res.data[0].maxId;
+        self.minId = res.data[0].minId;
     };
 
     //Vue Components//
@@ -159,7 +161,17 @@
                 axios
                     .get("/main/" + self.prevImg)
                     .then(function (res) {
-                        getSingleImageWithFormatedDate(res, self);
+                        if (self.prevImg === self.maxId) {
+                            getSingleImageWithFormatedDate(res, self);
+                            document
+                                .getElementById("prev-image")
+                                .classList.add("hidden");
+                        } else {
+                            getSingleImageWithFormatedDate(res, self);
+                            document
+                                .getElementById("next-image")
+                                .classList.remove("hidden");
+                        }
                     })
                     .catch(function (err) {
                         console.log("error in getPrevImage:", err);
@@ -172,7 +184,19 @@
                 axios
                     .get("/main/" + self.nextImg)
                     .then(function (res) {
-                        getSingleImageWithFormatedDate(res, self);
+                        //console.log("getNextImage", res);
+                        if (self.nextImg === self.minId) {
+                            //console.log("mminId", self.minId);
+                            getSingleImageWithFormatedDate(res, self);
+                            document
+                                .getElementById("next-image")
+                                .classList.add("hidden");
+                        } else {
+                            document
+                                .getElementById("prev-image")
+                                .classList.remove("hidden");
+                            getSingleImageWithFormatedDate(res, self);
+                        }
                     })
                     .catch(function (err) {
                         console.log("error in getNextImage:", err);

@@ -49,7 +49,7 @@
            <div class="closeX" @click="closeModal">close</div>
            <div class="prev-and-next"> 
            <img class="clicked-image" :src="url"/>
-           <form><button @click="getPrevImage">prev</button><button @click="getNextImage">next</button><br>
+           <form><button id ="prev-image" @click="getPrevImage">prev</button><button id ="next-image"  @click="getNextImage">next</button><br>
             <button class="delete-button" @click="deleteImage">delete Image</button>
             </form>
            </div>

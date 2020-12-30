@@ -11,7 +11,7 @@ module.exports.getUserData = () => {
 };
 module.exports.getSingleImage = (imageId) => {
     return db.query(
-        `SELECT *, (SELECT id FROM images WHERE id > ($1) ORDER BY id ASC LIMIT 1) AS "prevImg", (SELECT id FROM images WHERE id < ($1) ORDER BY id DESC LIMIT 1) AS "nextImg" FROM images WHERE id = ($1)`,
+        `SELECT *, (SELECT id FROM images WHERE id > ($1) ORDER BY id ASC LIMIT 1) AS "prevImg", (SELECT id FROM images WHERE id < ($1) ORDER BY id DESC LIMIT 1) AS "nextImg", (SELECT MAX(id)FROM images) AS "maxId", (SELECT MIN(id)FROM images) AS "minId" FROM images WHERE id = ($1)`,
         [imageId]
     );
 };

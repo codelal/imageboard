@@ -6,7 +6,7 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const s3 = require("./s3");
 const config = require("./config.json");
-const { get } = require("http");
+
 
 app.use(
     express.urlencoded({
@@ -50,24 +50,24 @@ app.get("/main", (req, res) => {
 
 app.get("/main/:imageId", (req, res) => {
     const { imageId } = req.params;
-    //console.log("imageId vom req.body", imageId);
-
+    //  console.log("imageId vom req.body", imageId);
     db.getSingleImage(imageId)
         .then(({ rows }) => {
             // console.log("rows get single Image", rows);
             res.json(rows);
         })
         .catch((err) => {
-            console.log(err);
+            console.log("err in getSingleImage", err);
         });
 });
 
 app.get("/more/:latestId", (req, res) => {
     const { latestId } = req.params;
     //console.log("latesId", latestId);
+
     db.getMoreImages(latestId)
         .then(({ rows }) => {
-            //  console.log("rows get more Images", rows);
+            //console.log("rows get more Images", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -106,7 +106,6 @@ app.post("/comments", (req, res) => {
             res.json({ sucess: false });
         });
 });
-
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const { userName, title, description } = req.body;

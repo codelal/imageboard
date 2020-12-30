@@ -140,6 +140,7 @@ img {
     box-shadow: 0 14px 28px rgba(1, 2, 0, 0.25);
 }
 
+
 p {
     margin-left: 3rem;
     width: 10rem;
@@ -179,8 +180,16 @@ h2 {
     margin-top: 0.3rem;
     height: 28rem;
     width: 28rem;
-
     box-shadow: 0 14px 28px rgba(1, 2, 0, 0.25);
+}
+
+.prev-and-next{
+    border: 0.2rem solid black;
+    width: 30rem;
+}
+
+.delete-button{
+    margin-top: 1rem;
 }
 
 .img-description {
@@ -200,6 +209,7 @@ h2 {
     height: 40rem;
     width: 45rem;
     margin:0;
+    visibility: hidden;
 }
 #p-comments {
     width: 100%;

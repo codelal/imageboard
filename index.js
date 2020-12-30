@@ -6,6 +6,7 @@ const uidSafe = require("uid-safe");
 const path = require("path");
 const s3 = require("./s3");
 const config = require("./config.json");
+const { get } = require("http");
 
 app.use(
     express.urlencoded({
@@ -34,7 +35,6 @@ const uploader = multer({
 });
 
 app.use(express.static("public"));
-
 
 app.get("/main", (req, res) => {
     db.getUserData()
@@ -106,6 +106,7 @@ app.post("/comments", (req, res) => {
             res.json({ sucess: false });
         });
 });
+
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const { userName, title, description } = req.body;

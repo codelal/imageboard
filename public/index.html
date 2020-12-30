@@ -47,7 +47,12 @@
         <div class ="component">
             <h2>{{title}}</h2> 
            <div class="closeX" @click="closeModal">close</div>
+           <div class="prev-and-next"> 
            <img class="clicked-image" :src="url"/>
+           <form><button @click="getPrevImage">prev</button><button @click="getNextImage">next</button><br>
+            <button class="delete-button" @click="deleteImage">delete Image</button>
+            </form>
+           </div>
             <comments-component
                  :image-id="imageId"
            ></comments-component">
@@ -71,7 +76,7 @@
            <button class="post" @click="postComments">Post</button>
         </form>
       <div v-for="comment in comments">
-                <div id ="single-comment">{{comment.name}} {{comment.comment}} {{comment.created_at}}</div>
+                <div id ="single-comment">{{comment.comment}} <br>{{comment.name}}, {{comment.created_at}}</div>
       </div>
         </div>    
     </script>

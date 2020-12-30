@@ -33,6 +33,8 @@
         self.description = res.data[0].description;
         self.username = res.data[0].username;
         self.createdAt = fullDate;
+        self.prevImg = res.data[0].prevImg;
+        self.nextImg = res.data[0].nextImg;
     };
 
     //Vue Components//
@@ -92,7 +94,7 @@
                         var newComment = {
                             comment: res.data.comment,
                             name: res.data.name,
-                            created_at: formateDateTime(res.data.created_at)
+                            created_at: formateDateTime(res.data.created_at),
                         };
                         self.comments.unshift(newComment);
                         self.name = "";
@@ -151,6 +153,34 @@
         methods: {
             closeModal: function () {
                 this.$emit("close");
+            },
+            getPrevImage: function () {
+                var self = this;
+                axios
+                    .get("/main/" + self.prevImg)
+                    .then(function (res) {
+                        getSingleImageWithFormatedDate(res, self);
+                    })
+                    .catch(function (err) {
+                        console.log("error in getPrevImage:", err);
+                        self.$emit("close");
+                    });
+            },
+
+            getNextImage: function () {
+                var self = this;
+                axios
+                    .get("/main/" + self.nextImg)
+                    .then(function (res) {
+                        getSingleImageWithFormatedDate(res, self);
+                    })
+                    .catch(function (err) {
+                        console.log("error in getNextImage:", err);
+                        self.$emit("close");
+                    });
+            },
+            deleteImage: function () {
+                console.log("deleteImage runs");
             },
         },
     });

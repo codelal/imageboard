@@ -1,5 +1,6 @@
 //console.log("sanity check");
 (function () {
+    //functions to getComments and Images with formated Data//
     const formateDateTime = (date) => {
         return new Intl.DateTimeFormat("en-US", {
             year: "numeric",
@@ -10,6 +11,31 @@
             hour12: true,
         }).format(new Date(date));
     };
+
+    const getCommentsWithFormatedDate = (res) => {
+        var comments = [];
+        for (var i = 0; i < res.data.length; i++) {
+            var fullDate = formateDateTime(res.data[i].created_at);
+            var comment = {
+                comment: res.data[i].comment,
+                created_at: fullDate,
+                name: res.data[i].name,
+            };
+            comments.push(comment);
+        }
+        return comments;
+    };
+
+    const getSingleImageWithFormatedDate = (res, self) => {
+        var fullDate = formateDateTime(res.data[0].created_at);
+        self.url = res.data[0].url;
+        self.title = res.data[0].title;
+        self.description = res.data[0].description;
+        self.username = res.data[0].username;
+        self.createdAt = fullDate;
+    };
+
+    //Vue Components//
 
     Vue.component("comments-component", {
         template: "#childTemplate",
@@ -24,26 +50,10 @@
         },
         mounted: function () {
             var self = this;
-            // console.log("mounted in childComponent works", this.imageId);
             axios
                 .get("/comments/" + this.imageId)
                 .then(function (res) {
-                    //console.log("get/comments2", res.data);
-                    
-                    var comments = [];
-                    for (var i = 0; i < res.data.length; i++) {
-                        var fullDate = formateDateTime(res.data[i].created_at);
-
-                        var comment = {
-                            comment: res.data[i].comment,
-                            created_at: fullDate,
-                            name: res.data[i].name,
-                        };
-
-                        comments.push(comment);
-                    }
-
-                    self.comments = comments;
+                    self.comments = getCommentsWithFormatedDate(res);
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -51,28 +61,11 @@
         },
         watch: {
             imageId: function () {
-                //console.log("imgId prop updated");
                 var self = this;
                 axios
                     .get("/comments/" + this.imageId)
                     .then(function (res) {
-                        // console.log("get/comments", res.data);
-                        var comments = [];
-                        for (var i = 0; i < res.data.length; i++) {
-                            var fullDate = formateDateTime(
-                                res.data[i].created_at
-                            );
-
-                            var comment = {
-                                comment: res.data[i].comment,
-                                created_at: fullDate,
-                                name: res.data[i].name,
-                            };
-
-                            comments.push(comment);
-                        }
-
-                        self.comments = comments;
+                        self.comments = getCommentsWithFormatedDate(res);
                     })
                     .catch(function (err) {
                         console.log(err);
@@ -90,14 +83,18 @@
                     comment: this.comment,
                     imageId: this.imageId,
                 };
-                // console.log("commentsData", commentsData);
+
                 axios
                     .post("/comments", commentsData)
                     .then(function (res) {
                         console.log("res.data from post/comments", res.data);
-                        self.comments.unshift(res.data);
-
-
+                        console.log("self.comments", self.comments);
+                        var newComment = {
+                            comment: res.data.comment,
+                            name: res.data.name,
+                            created_at: formateDateTime(res.data.created_at)
+                        };
+                        self.comments.unshift(newComment);
                         self.name = "";
                         self.comment = "";
                     })
@@ -127,16 +124,7 @@
             axios
                 .get("/main/" + self.imageId)
                 .then(function (res) {
-                    var fullDate = formateDateTime(res.data[0].created_at);
-                    //console.log("fulldate", fullDate);
-                    //console.log("unformated Date", res.data[0].created_at);
-
-                    self.url = res.data[0].url;
-                    self.title = res.data[0].title;
-                    self.description = res.data[0].description;
-                    // console.log("description", res.data[0].description);
-                    self.username = res.data[0].username;
-                    self.createdAt = fullDate;
+                    getSingleImageWithFormatedDate(res, self);
                 })
                 .catch(function (err) {
                     console.log("error in axios get main/image:", err);
@@ -151,16 +139,7 @@
                 axios
                     .get("/main/" + self.imageId)
                     .then(function (res) {
-                        // self.fullScreenImage = res.data[0];
-                        //  console.log("res from axios", res);
-                        var fullDate = formateDateTime(res.data[0].created_at);
-                        // console.log("fulldate", fullDate);
-
-                        self.url = res.data[0].url;
-                        self.title = res.data[0].title;
-                        self.description = res.data[0].description;
-                        self.username = res.data[0].username;
-                        self.createdAt = fullDate;
+                        getSingleImageWithFormatedDate(res, self);
                     })
                     .catch(function (err) {
                         console.log("error in axios get main/image:", err);
@@ -171,8 +150,6 @@
 
         methods: {
             closeModal: function () {
-                // console.log("closeModal is running!");
-                //console.log("about to emit an event from the component!!");
                 this.$emit("close");
             },
         },
@@ -201,8 +178,6 @@
                 });
 
             addEventListener("hashchange", function () {
-                //  console.log("hash has changed to actual Id of the image");
-                //  console.log(self.imageId);
                 self.imageId = location.hash.slice(1);
             });
         },
@@ -210,10 +185,8 @@
             handleFileChange: function (event) {
                 var self = this;
                 self.file = event.target.files[0];
-                //console.log(this.file);
                 var upload = document.getElementsByClassName("upload");
                 var label = document.getElementById("label");
-                //console.log(label);
 
                 upload[0].addEventListener("change", function () {
                     if (self.file) {
@@ -233,15 +206,12 @@
                 axios
                     .post("/upload", formData)
                     .then(function (res) {
-                        // console.log("response from upload", res.data);
                         self.images.unshift(res.data);
                         self.title = "";
                         self.description = "";
                         self.userName = "";
                         var label = document.getElementById("label");
                         label.innerHTML = "Choose an Image";
-
-                        //console.log(this);
                     })
                     .catch((err) => {
                         console.log(err);
@@ -261,7 +231,6 @@
                     .get("/more/" + self.images[j].id)
                     .then(function (res) {
                         for (var i = 0; i < res.data.length; i++) {
-                            // console.log("id", id);
                             if (res.data[i].id === res.data[i].lowestId) {
                                 self.images.push(res.data[i]);
                                 document
@@ -271,8 +240,6 @@
                                 self.images.push(res.data[i]);
                             }
                         }
-
-                        // console.log("res from showMoreImages", addNewImages.images);
                     })
                     .catch((err) => {
                         console.log(err);

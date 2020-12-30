@@ -95,24 +95,10 @@ app.post("/comments", (req, res) => {
     // console.log(name, comment, imageId);
     db.insertComments(name, comment, imageId)
         .then(({ rows }) => {
-            const formateDateTime = (date) => {
-                return new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: true,
-                }).format(new Date(date));
-            };
-
-            var newDate = formateDateTime(rows[0].created_at);
-            console.log("rows from Insert", rows, newDate);
-
             res.json({
                 comment: comment,
                 name: name,
-                created_at: newDate,
+                created_at: rows[0].created_at,
             });
         })
         .catch((err) => {
@@ -123,9 +109,7 @@ app.post("/comments", (req, res) => {
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const { userName, title, description } = req.body;
-    // console.log(title, userName, description);
     const url = `${config.s3Url}${req.file.filename}`;
-    // console.log("imageUrl", imageUrl);
 
     db.insertUserDataIntoImages(url, userName, title, description)
         .then(({ rows }) => {

@@ -1,5 +1,6 @@
 //console.log("sanity check");
 (function () {
+    
     //functions to getComments and Images with formated Data//
     const formateDateTime = (date) => {
         return new Intl.DateTimeFormat("en-US", {
@@ -37,6 +38,20 @@
         self.nextImg = res.data[0].nextImg;
         self.maxId = res.data[0].maxId;
         self.minId = res.data[0].minId;
+    };
+
+//function to check Max ImageId and Min ImageId on Screen to hde/show the next/prev
+    const checkMaxMinIdForPrevNext = (self, res) => {
+        if (self.imageId == res.data[0].maxId) {
+            document.getElementById("prev-image").classList.add("hidden");
+            document.getElementById("next-image").classList.remove("hidden");
+        } else if (self.imageId == res.data[0].minId) {
+            document.getElementById("next-image").classList.add("hidden");
+            document.getElementById("prev-image").classList.remove("hidden");
+        } else {
+            document.getElementById("next-image").classList.remove("hidden");
+            document.getElementById("prev-image").classList.remove("hidden");
+        }
     };
 
     //Vue Components//
@@ -122,33 +137,10 @@
         },
         mounted: function () {
             var self = this;
-            // console.log("props id in vue component", self.imageId);
-
             axios
                 .get("/main/" + self.imageId)
-                .then(function (res) {
-                    if (self.imageId == res.data[0].maxId) {
-                        document
-                            .getElementById("prev-image")
-                            .classList.add("hidden");
-                        document
-                            .getElementById("next-image")
-                            .classList.remove("hidden");
-                    } else if (self.imageId == res.data[0].minId) {
-                        document
-                            .getElementById("next-image")
-                            .classList.add("hidden");
-                        document
-                            .getElementById("prev-image")
-                            .classList.remove("hidden");
-                    } else {
-                        document
-                            .getElementById("next-image")
-                            .classList.remove("hidden");
-                        document
-                            .getElementById("prev-image")
-                            .classList.remove("hidden");
-                    }
+                .then(function (res) {                 
+                    checkMaxMinIdForPrevNext(self, res);
                     self.images = getSingleImageWithFormatedDate(res, self);
                 })
                 .catch(function (err) {
@@ -159,33 +151,11 @@
 
         watch: {
             imageId: function () {
-                // console.log("imgId prop updated");
                 var self = this;
                 axios
                     .get("/main/" + self.imageId)
                     .then(function (res) {
-                        if (self.imageId == res.data[0].maxId) {
-                            document
-                                .getElementById("prev-image")
-                                .classList.add("hidden");
-                            document
-                                .getElementById("next-image")
-                                .classList.remove("hidden");
-                        } else if (self.imageId == res.data[0].minId) {
-                            document
-                                .getElementById("next-image")
-                                .classList.add("hidden");
-                            document
-                                .getElementById("prev-image")
-                                .classList.remove("hidden");
-                        } else {
-                            document
-                                .getElementById("next-image")
-                                .classList.remove("hidden");
-                            document
-                                .getElementById("prev-image")
-                                .classList.remove("hidden");
-                        }
+                        checkMaxMinIdForPrevNext(self, res);
                         self.images = getSingleImageWithFormatedDate(res, self);
                     })
                     .catch(function (err) {
@@ -201,19 +171,9 @@
             },
             getPrevImage: function () {
                 var self = this;
-                console.log(self);
                 axios
                     .get("/main/" + self.prevImg)
                     .then(function () {
-                        if (self.prevImg == self.maxId) {
-                            document
-                                .getElementById("prev-image")
-                                .classList.add("hidden");
-                        } else {
-                            document
-                                .getElementById("next-image")
-                                .classList.remove("hidden");
-                        }
                         location.hash = self.prevImg;
                     })
                     .catch(function (err) {
@@ -224,23 +184,12 @@
 
             getNextImage: function () {
                 var self = this;
-                console.log(self.imageId, self.nextImg);
                 axios
                     .get("/main/" + self.nextImg)
                     .then(function () {
-                        if (self.nextImg == self.minId) {
-                            console.log(self.nextImg, self.minId);
-                            location.hash = self.nextImg;
-                            document
-                                .getElementById("next-image")
-                                .classList.add("hidden");
-                        } else {
-                            location.hash = self.nextImg;
-                            document
-                                .getElementById("prev-image")
-                                .classList.remove("hidden");
-                        }
+                        location.hash = self.nextImg;
                     })
+
                     .catch(function (err) {
                         console.log("error in getNextImage:", err);
                         self.$emit("close");

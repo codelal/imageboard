@@ -80,7 +80,6 @@
         methods: {
             postComments: function (event) {
                 var self = this;
-                //console.log("sendComments works");
                 event.preventDefault();
                 var commentsData = {
                     name: this.name,
@@ -128,7 +127,20 @@
             axios
                 .get("/main/" + self.imageId)
                 .then(function (res) {
-                    getSingleImageWithFormatedDate(res, self);
+                    if (self.imageId == res.data[0].maxId) {
+                        getSingleImageWithFormatedDate(res, self);
+                        document
+                            .getElementById("prev-image")
+                            .classList.add("hidden");
+                    }
+                    if (self.imageId == res.data[0].minId) {
+                        getSingleImageWithFormatedDate(res, self);
+                        document
+                            .getElementById("next-image")
+                            .classList.add("hidden");
+                    } else {
+                        getSingleImageWithFormatedDate(res, self);
+                    }
                 })
                 .catch(function (err) {
                     console.log("error in axios get main/image:", err);
@@ -143,7 +155,20 @@
                 axios
                     .get("/main/" + self.imageId)
                     .then(function (res) {
-                        getSingleImageWithFormatedDate(res, self);
+                        if (self.imageId == res.data[0].maxId) {
+                            getSingleImageWithFormatedDate(res, self);
+                            document
+                                .getElementById("prev-image")
+                                .classList.add("hidden");
+                        }
+                        if (self.imageId == res.data[0].minId) {
+                            getSingleImageWithFormatedDate(res, self);
+                            document
+                                .getElementById("next-image")
+                                .classList.add("hidden");
+                        } else {
+                            getSingleImageWithFormatedDate(res, self);
+                        }
                     })
                     .catch(function (err) {
                         console.log("error in axios get main/image:", err);
@@ -162,15 +187,17 @@
                     .get("/main/" + self.prevImg)
                     .then(function (res) {
                         if (self.prevImg === self.maxId) {
-                            getSingleImageWithFormatedDate(res, self);
                             document
                                 .getElementById("prev-image")
                                 .classList.add("hidden");
+                            getSingleImageWithFormatedDate(res, self);
+                            location.hash = self.prevImg;
                         } else {
                             getSingleImageWithFormatedDate(res, self);
                             document
                                 .getElementById("next-image")
                                 .classList.remove("hidden");
+                            location.hash = self.prevImg;
                         }
                     })
                     .catch(function (err) {
@@ -191,11 +218,13 @@
                             document
                                 .getElementById("next-image")
                                 .classList.add("hidden");
+                            location.hash = self.nextImg;
                         } else {
+                            getSingleImageWithFormatedDate(res, self);
                             document
                                 .getElementById("prev-image")
                                 .classList.remove("hidden");
-                            getSingleImageWithFormatedDate(res, self);
+                            location.hash = self.nextImg;
                         }
                     })
                     .catch(function (err) {
@@ -233,6 +262,7 @@
 
             addEventListener("hashchange", function () {
                 self.imageId = location.hash.slice(1);
+                //console.log(location.hash.slice(1));
             });
         },
         methods: {

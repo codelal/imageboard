@@ -7,7 +7,6 @@ const path = require("path");
 const s3 = require("./s3");
 const config = require("./config.json");
 
-
 app.use(
     express.urlencoded({
         extended: false,
@@ -51,14 +50,19 @@ app.get("/main", (req, res) => {
 app.get("/main/:imageId", (req, res) => {
     const { imageId } = req.params;
     //  console.log("imageId vom req.body", imageId);
-    db.getSingleImage(imageId)
-        .then(({ rows }) => {
-            // console.log("rows get single Image", rows);
-            res.json(rows);
-        })
-        .catch((err) => {
-            console.log("err in getSingleImage", err);
-        });
+    if (imageId == null) {
+        return;
+    } else {
+        db.getSingleImage(imageId)
+            .then(({ rows }) => {
+                // console.log("rows get single Image", rows);
+                res.json(rows);
+            })
+            .catch((err) => {
+                console.log("err in getSingleImage", err);
+                res.json({ sucess: false });
+            });
+    }
 });
 
 app.get("/more/:latestId", (req, res) => {
@@ -72,6 +76,7 @@ app.get("/more/:latestId", (req, res) => {
         })
         .catch((err) => {
             console.log("error in getMoreImages", err);
+            res.json({ sucess: false });
         });
 });
 

@@ -4,7 +4,6 @@
     font-family: "Nanum Myeongjo";
     text-transform: uppercase;
     color: black;
-
     text-align: center;
 }
 
@@ -12,7 +11,6 @@ h1 {
     margin-top: 3rem;
     margin-bottom: 3rem;
     font-weight: 100;
-    text-align: center;
     background-color: rgba(37, 97, 37, 0.1);
     padding: 0.1rem;
     color: rgb(3, 34, 3);
@@ -25,7 +23,6 @@ h3 {
 
 .main-input {
     text-align: center;
-    margin-bottom: 2rem;
 }
 
 input {
@@ -57,7 +54,6 @@ input {
     cursor: pointer;
     padding-top: 0.6rem;
     border-radius: 3px;
-
     border-radius: 4px;
 }
 
@@ -70,12 +66,17 @@ input {
     cursor: pointer;
 }
 
-.upload{
-    width:12rem;
-    margin:0;
+.upload {
+    width: 12rem;
+    margin: 0;
     transform: translateX(-50%);
     margin-left: 50%;
-  
+}
+
+#more-button,
+#upload-button,
+input:focus {
+    outline: 0;
 }
 
 #upload-button {
@@ -83,12 +84,18 @@ input {
     width: 6rem;
     height: 2.4rem;
     border: 0;
-    background-color: rgba(37, 97, 37, 0.0);
+    background-color: rgba(37, 97, 37, 0);
     border-radius: 3px;
     margin-bottom: 1rem;
     margin-left: 0.7rem;
     margin-top: 0.3rem;
     border-radius: 4px;
+}
+
+#upload-button:hover,
+#more-button:hover,
+button:hover {
+    background-color: rgba(37, 97, 37, 0.3);
 }
 
 #more-button {
@@ -97,7 +104,6 @@ input {
     font-size: 1rem;
     background-color: rgb(25, 44, 25, 0.1);
     box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
-    border-radius: 3px;
     margin-bottom: 2rem;
     border: 0;
     border-radius: 4px;
@@ -114,7 +120,7 @@ h3 {
     margin-top: 2rem;
 }
 
-.grid-container {
+.grid-container-images {
     display: grid;
     grid-template-columns: repeat(3, 21rem);
     grid-template-rows: repeat(3, 24rem);
@@ -124,7 +130,7 @@ h3 {
     width: 60rem;
 }
 
-.grid {
+.grid-image {
     width: 21rem;
 }
 
@@ -140,34 +146,36 @@ img {
     box-shadow: 0 14px 28px rgba(1, 2, 0, 0.25);
 }
 
-
 p {
     margin-left: 3rem;
     width: 10rem;
     height: 2rem;
 }
 
+/*Parent- Image -Component*/
+
 .component {
     background-color: rgb(220, 228, 214);
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 2.5rem;
+    left: 2.5rem;
+    right: 2.5rem;
+    bottom: 2.5rem;
     display: grid;
-    grid-template-columns:50% 50%;
+    grid-template-columns: 50% 50%;
     grid-template-rows: 7rem 34rem 8rem 3rem;
     justify-items: center;
+    border: 0.2rem solid rgb(126, 146, 126, 0.9);
+    border-radius: 5px;
 }
 
 .closeX {
     font-size: 1rem;
     color: rgb(253, 253, 253);
     text-shadow: 1px 1px rgb(144, 136, 136);
-    height:1.1rem;
+    height: 1.1rem;
     justify-self: center;
     margin-top: 3rem;
-  
 }
 
 h2 {
@@ -183,12 +191,16 @@ h2 {
     box-shadow: 0 14px 28px rgba(1, 2, 0, 0.25);
 }
 
-.prev-and-next{
-    border: 0.2rem solid black;
+.prev-and-next {
     width: 30rem;
+    background-color: rgb(25, 44, 25, 0.1);
+    box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
+    margin-bottom: 2rem;
+    border: 0;
+    border-radius: 10px;
 }
 
-.delete-button{
+.delete-button {
     margin-top: 1rem;
 }
 
@@ -203,13 +215,13 @@ h2 {
     color: rgb(3, 34, 3, 0.9);
 }
 
+/* Child- Comments - Component*/
 .comments-component {
     border: 0.2rem solid rgb(126, 146, 126, 0.8);
     border-radius: 6px;
     height: 40rem;
     width: 45rem;
-    margin:0;
-    
+    margin: 0;
 }
 #p-comments {
     width: 100%;
@@ -224,7 +236,6 @@ h2 {
 #single-comment {
     text-align: center;
     margin: 1.3rem;
-    
     padding: 1rem;
     background-color: rgb(253, 253, 253, 0.5);
     box-shadow: 0 8px 8px rgba(1, 1, 0, 0.25);
@@ -262,28 +273,29 @@ h2 {
     border: 0.1rem solid rgb(126, 146, 126, 0.9);
 }
 
+/* responsive - Design */
+
 @media screen and (min-width: 300px) and (max-width: 720px) {
     .grid-container {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 15rem 35rem 15rem 35 rem;
         justify-items: center;
-        margin:0;
-      
+        margin: 0;
     }
 
-    .commponent{
-    grid-template-columns:1fr;
-    grid-template-rows: 1fr 1fr;
-    justify-items: center;
+    .commponent {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        justify-items: center;
     }
 
     .img-description {
-          grid-row-start: 3; 
+        grid-row-start: 3;
     }
 
-    .comments-component{
-       grid-row-start: 4; 
-       grid-row-end: span 5;
+    .comments-component {
+        grid-row-start: 4;
+        grid-row-end: span 5;
     }
 }

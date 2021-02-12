@@ -2,86 +2,79 @@
 <html>
 <head>
     <link rel="stylesheet" href="/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;500;700;900&family=Nanum+Myeongjo:wght@700;800&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;500;700;900&family=Nanum+Myeongjo:wght@700;800&display=swap" rel="stylesheet"> 
     <title></title>
 </head>
 <body>
-    <h1>Welcome to the Imageboard</h1>
-   
+  <h1>Welcome to the Imageboard</h1>
      <!-- Main element has access to Vue logic -->
-    <div id = "main">
+  <div id = "main">
+      <form method="POST" action="/upload" enctype="multipart/form-data">
         <div class ="main-input">
-        <form method="POST" action="/upload" enctype="multipart/form-data">
-            <input class="inputtext" name ="title" placeholder="Title" autocomplete="off" type ="text" v-model="title">
-            <input class="inputtext" name ="description" placeholder="Image Description" autocomplete="off" type ="text" v-model="description">
-            <input class="inputtext" name ="userName" placeholder="username" autocomplete="off" type ="text" v-model="userName">
-            </div>
-            <div class="upload">
-            <input id="inputfile"  class="inputfile" name ="file" type ="file" accept ="image/*" @change="handleFileChange">
-            <label id="label" for="inputfile">Choose an Image</label></div>
-            <button id="upload-button" @click="handleUpload">Upload</button>
-          
-       
-        </form>
-
- <h3>Latest Images</h3>
-        <div class="grid-container">
-            <div class = "grid" v-for="image in images"><a :href="'#' + image.id" alt="image"><img :src="image.url" alt="image"/></a>
-                <p>{{image.title}}</p>
-            </div>
-            
-   </form>
+          <input class="inputtext" name ="title" placeholder="Title" autocomplete="off" type ="text" v-model="title">
+          <input class="inputtext" name ="description" placeholder="Image Description" autocomplete="off" type ="text" v-model="description">
+          <input class="inputtext" name ="userName" placeholder="username" autocomplete="off" type ="text" v-model="userName"/>
         </div>
-       <button id="more-button" @click="showMoreImages">More</button>
-          <!-- this is where I render my component (inside Main) -->
-        <vue-component
-            v-if="imageId"
-            :image-id="imageId"
-          @close="closeImage"
-         ></vue-component>   
- 
-    </div>
-       <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
-      
-    <script id = "template" type ="text/x-template">
-        <div class ="component">
-            <h2>{{title}}</h2> 
-           <div class="closeX" @click="closeModal">close</div>
-           <div class="prev-and-next"> 
-           <img class="clicked-image" :src="url"/>
-           <button id ="prev-image" @click="getPrevImage">prev</button><button id ="next-image"  @click="getNextImage">next</button><br>
-           </div>
-            <comments-component
-                 :image-id="imageId"
-           ></comments-component">
-           <div class="img-description">
-             <p class ="p-component">{{createdAt}}</p>
-            <p class ="p-component">Uploaded by: {{username}}</p>
-            <p class ="p-component">DESCRIPTION: PAINTING BY {{description}}</p>
-            
-          </div>
-          
-           
-        </div>    
-    </script>
-    
- <script id = "childTemplate" type ="text/x-template">
-        <div class ="comments-component">
-          <p id ="p-comments">Leave a comment<p>
-              <form method="POST" action="/upload" enctype="multipart/form-data">
-            <input id="comment-name" name ="name" placeholder="name"type ="text" v-model="name">
-           <input id="comment-input" name ="comment" placeholder="comment"type ="text" v-model="comment">
-           <button class="post" @click="postComments">Post</button>
-        </form>
-      <div v-for="comment in comments">
-                <div id ="single-comment">{{comment.comment}} <br>{{comment.name}}, {{comment.created_at}}</div>
+        <div class="upload">
+          <input id="inputfile"  class="inputfile" name ="file" type ="file" accept ="image/*" @change="handleFileChange"/>
+          <label id="label" for="inputfile">Choose an Image</label>
+        </div>
+        <button id="upload-button" @click="handleUpload">Upload</button>
+      </form> 
+
+      <h3>Latest Images</h3>
+      <div class="grid-container-images">
+        <div class = "grid-image" v-for="image in images">
+          <a :href="'#' + image.id" alt="image">
+            <img :src="image.url" alt="image"/>
+          </a>
+          <p>{{image.title}}</p>
+        </div>
       </div>
-        </div>    
-    </script>
+      <button id="more-button" @click="showMoreImages">More</button>
 
+  <!-- this is where I render my component (inside Main) -->
+      <vue-component
+        v-if="imageId"
+        :image-id="imageId"
+        @close="closeImage"
+      ></vue-component>   
+  </div>
 
-    <script src="/js/vue.js"></script>
-    <script src="/js/axios.min.js"></script>
-     <script src="/js/script.js"></script>
+  <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
+  <script id = "template" type ="text/x-template">
+    <div class ="component">
+      <h2>{{title}}</h2> 
+      <div class="closeX" @click="closeModal">close</div>
+        <div class="prev-and-next"> 
+          <img class="clicked-image" :src="url"/>
+          <button id ="prev-image" @click="getPrevImage">prev</button><button id ="next-image"  @click="getNextImage">next</button><br>
+        </div>
+        <comments-component :image-id="imageId"></comments-component">
+        <div class="img-description">
+          <p class ="p-component">{{createdAt}}</p>
+          <p class ="p-component">Uploaded by: {{username}}</p>
+          <p class ="p-component">DESCRIPTION: PAINTING BY {{description}}</p>
+        </div>
+      </div>    
+  </script>  
+
+  <script id = "childTemplate" type ="text/x-template">
+    <div class ="comments-component">
+      <p id ="p-comments">Leave a comment<p>
+      <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input id="comment-name" name ="name" placeholder="name"type ="text" v-model="name">
+        <input id="comment-input" name ="comment" placeholder="comment"type ="text" v-model="comment">
+        <button class="post" @click="postComments">Post</button>
+      </form>
+      <div v-for="comment in comments">
+        <div id ="single-comment">{{comment.comment}} <br>{{comment.name}}, {{comment.created_at}}</div>
+      </div>
+    </div>    
+  </script>
+
+  <script src="/js/vue.js"></script>
+  <script src="/js/axios.min.js"></script>
+  <script src="/js/script.js"></script>
 </body>
 </html>

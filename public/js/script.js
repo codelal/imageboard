@@ -1,4 +1,4 @@
-//console.log("sanity check");
+
 (function () {
     
     //functions to getComments and Images with formated Data//
@@ -40,7 +40,7 @@
         self.minId = res.data[0].minId;
     };
 
-//function to check Max ImageId and Min ImageId on Screen to hde/show the next/prev
+//function to check max-imageId and min-imageId for next/prev-functionality
     const checkMaxMinIdForPrevNext = (self, res) => {
         if (self.imageId == res.data[0].maxId) {
             document.getElementById("prev-image").classList.add("hidden");
@@ -75,7 +75,7 @@
                     self.comments = getCommentsWithFormatedDate(res);
                 })
                 .catch(function (err) {
-                    console.log(err);
+                    console.log("error in comments/imageId", err);
                 });
         },
         watch: {
@@ -87,7 +87,7 @@
                         self.comments = getCommentsWithFormatedDate(res);
                     })
                     .catch(function (err) {
-                        console.log(err);
+                        console.log("error in comments/imageId", err);
                     });
             },
         },
@@ -220,12 +220,11 @@
                     self.images = res.data;
                 })
                 .catch(function (err) {
-                    console.log("error:", err);
+                    console.log("error in /main:", err);
                 });
 
             addEventListener("hashchange", function () {
                 self.imageId = location.hash.slice(1);
-                //console.log(location.hash.slice(1));
             });
         },
         methods: {
@@ -261,7 +260,7 @@
                         label.innerHTML = "Choose an Image";
                     })
                     .catch((err) => {
-                        console.log(err);
+                        console.log("error in upload", err);
                     });
             },
 
@@ -289,7 +288,7 @@
                         }
                     })
                     .catch((err) => {
-                        console.log(err);
+                        console.log("error in /more/imageId:",err);
                     });
             },
         },

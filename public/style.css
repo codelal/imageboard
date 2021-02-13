@@ -249,7 +249,6 @@ h2 {
 .comments-component {
     grid-area: 2/2;
     justify-self: start;
-    /* border: 0.1rem solid rgb(126, 146, 126, 0.8); */
     border-radius: 12px;
     height: 40rem;
     width: 50vw;

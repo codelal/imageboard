@@ -46,18 +46,20 @@
     <div class ="component">
       <h2>{{title}}</h2> 
       <div class="closeX" @click="closeModal">X</div>
-        <div class="prev-and-next"> 
+        <div class="single-image-container"> 
           <img class="clicked-image" :src="url"/>
           <button id ="prev-image" @click="getPrevImage">prev</button>
           <button id ="next-image"  @click="getNextImage">next</button><br>
         </div>
-        <comments-component :image-id="imageId"></comments-component">
-        <div class="img-description">
+          <div class="img-description">
           <p class ="p-component">{{createdAt}}</p>
           <p class ="p-component">Uploaded by: {{username}}</p>
           <p class ="p-component">DESCRIPTION: PAINTING BY {{description}}</p>
+      
         </div>
+         <comments-component :image-id="imageId"></comments-component">
       </div>    
+      
   </script>  
 
   <script id = "childTemplate" type ="text/x-template">

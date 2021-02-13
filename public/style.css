@@ -5,6 +5,7 @@
     text-transform: uppercase;
     color: black;
     text-align: center;
+    overflow: visible;
 }
 
 h1 {
@@ -76,8 +77,11 @@ input {
 
 #more-button,
 #upload-button,
-.post .name,
-.comment-input,
+#prev-image,
+#next-image,
+#comment-name,
+#comment-input,
+.post,
 input:focus {
     outline: 0;
 }
@@ -169,7 +173,7 @@ p {
     bottom: 2.5rem;
     display: grid;
     grid-template-columns: 40% 60%;
-    grid-template-rows: 5rem 27rem 20rem;
+    grid-template-rows: 10vh 50vh 20vh;
     justify-items: center;
     border: 0.2rem solid rgb(126, 146, 126, 0.9);
     border-radius: 5px;
@@ -178,9 +182,8 @@ p {
 .closeX {
     grid-area: 1/2;
     justify-self: end;
+    margin-top: 0.5rem;
     margin-right: 1rem;
-    margin-top: 1rem;
-    align-self: start;
     font-size: 1rem;
     color: rgb(253, 253, 253);
     text-shadow: 1px 1px rgb(144, 136, 136);
@@ -191,52 +194,93 @@ h2 {
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     color: rgba(30, 51, 30, 0.9);
+    font-size: 150%;
 }
 
-.prev-and-next {
+.single-image-container {
     grid-area: 2/1;
     width: 80%;
+    height: 100%;
+    margin-bottom: 2rem;
 }
 
 .clicked-image {
+    object-fit: contain;
     margin-top: 0.3rem;
-    height: 25rem;
+    margin-bottom: 0.5rem;
+    height: 100%;
     width: 100%;
-    box-shadow: 0 14px 28px rgba(1, 2, 0, 0.25);
+}
+
+.clicked-image img {
+    border-radius: 8px;
 }
 
 #next-image,
 #prev-image {
     background-color: rgb(253, 253, 253, 0.5);
-    box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
     border: 0;
     border-radius: 4px;
+    margin-bottom: 1rem;
+    font-size: 80%;
 }
 
 .img-description {
+    grid-area: 3/1;
+    align-self: center;
     justify-self: center;
     color: rgb(3, 34, 3, 0.9);
-    margin-top: 0.5rem;
-    height: 10rem;
+    margin-top: 1rem;
+    height: auto;
+    width: 100%;
+    font-size: 100%;
 }
 
 .p-component {
     margin: 0;
     width: 30rem;
     color: rgb(3, 34, 3, 0.9);
+    word-wrap: break-word;
+    width: 100%;
+    height: auto;
 }
 
 /* Child- Comments - Component*/
 .comments-component {
-    border: 0.2rem solid rgb(126, 146, 126, 0.8);
-    border-radius: 6px;
+    grid-area: 2/2;
+    justify-self: start;
+    /* border: 0.1rem solid rgb(126, 146, 126, 0.8); */
+    border-radius: 12px;
     height: 40rem;
-    width: 45rem;
-    margin: 0;
+    width: 50vw;
+    overflow: scroll;
+    box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
+    overflow: scroll;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(220, 228, 214);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar {
+    width: 0.8rem;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: rgb(220, 228, 214);
+    border-radius: 8px;
 }
 
 #p-comments {
     width: 100%;
+    text-align: center;
     margin-left: 0;
     margin-top: 1rem;
     text-align: center;
@@ -250,68 +294,156 @@ h2 {
     margin: 1.3rem;
     padding: 1rem;
     background-color: rgb(253, 253, 253, 0.5);
-    box-shadow: 0 8px 8px rgba(1, 1, 0, 0.25);
+    /* box-shadow: 0 8px 8px rgba(1, 1, 0, 0.25); */
     color: rgb(95, 95, 94);
-    border-radius: 4px;
+    border-radius: 8px;
+    word-wrap: break-word;
     border: 0.1rem solid rgb(126, 146, 126, 0.9);
 }
 
 #comment-name {
-    width: 8rem;
+    width: 6rem;
     margin-left: 0;
     margin-bottom: 2rem;
-    height: 2rem;
+    height: 1.5rem;
     background-color: rgb(253, 253, 253, 0.5);
     border: 0.1rem solid rgb(126, 146, 126, 0.9);
-    border-radius: 4px;
+    border-radius: 8px;
 }
+
 #comment-input {
     width: 25rem;
     margin-left: 1rem;
     margin-right: 1rem;
-    height: 2rem;
+    height: 5rem;
     background-color: rgb(253, 253, 253, 0.5);
     border-radius: 4px;
-    border: 0.1rem solid rgba(116, 213, 116, 0.9);
+    border: 0.1rem solid rgb(126, 146, 126, 0.9);
+    border-radius: 8px;
 }
 
 .post {
-    height: 2rem;
+    height: 1.5rem;
     width: 6rem;
-    font-size: 1rem;
     background-color: rgb(253, 253, 253, 0.5);
-    border-radius: 3px;
+    border-radius: 8px;
     border: 0.1rem solid rgb(126, 146, 126, 0.9);
 }
 
-/* responsive - Design */
+@media screen and (min-width: 300px) and (max-width: 960px) {
+    h1 {
+        font-size: 130%;
+    }
+    h3 {
+        font-size: 100%;
+        margin-left: 0;
+    }
 
-@media screen and (min-width: 300px) and (max-width: 920px) {
-    .grid-container-images,
-    .component {
+    #label {
+        font-size: 80%;
+        height: 2rem;
+        width: 10rem;
+    }
+
+    .grid-container-images {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         place-items: center;
     }
 
-    .prev-and-next {
+    .component {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 10vw 50vw 20vw;
+        place-items: center;
+        overflow: scroll;
+    }
+
+    h2 {
+        grid-area: 1/1;
+        font-size: 100%;
+        align-self: center;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        color: rgba(47, 54, 47, 0.9);
+    }
+
+    .closeX {
+        grid-area: 1/1;
+        font-size: 80%;
+        justify-self: end;
+        align-self: start;
+        margin-right: 1rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .single-image-container {
+        grid-area: 2/1;
         width: 70%;
+        height: 90%;
         justify-self: center;
-        display:grid;
         justify-items: center;
+        margin: 1rem;
     }
 
     .clicked-image {
         margin-top: 0.3rem;
-        width: 70%;
-        height: auto;
+        margin-bottom: 0.5rem;
+        height: 80%;
         box-shadow: 0 14px 28px rgba(1, 2, 0, 0.25);
     }
 
-  
+    #next-image,
+    #prev-image {
+        font-size: 60%;
+    }
+
+    .img-description {
+        grid-area: 3/1;
+        font-size: 70%;
+        margin-bottom: 1rem;
+        align-self: start;
+        margin-top: 1rem;
+    }
 
     .comments-component {
-        display: none;
+        grid-area: 4/1;
+        width: 100%;
+        text-align: center;
+    }
+    #p-comments {
+        font-size: 80%;
+        margin-top: 1rem;
+    }
+
+    #single-comment {
+        font-size: 80%;
+        padding: 0.3rem;
+    }
+
+    #comment-name {
+        width: 5rem;
+        font-size: 70%;
+        margin-left: 0;
+        margin-bottom: 1rem;
+        height: 1.5rem;
+    }
+
+    #comment-input {
+        width: 90%;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        height: 3rem;
+        font-size: 70%;
+    }
+
+    .post {
+        width: 4rem;
+        font-size: 70%;
+        margin-left: 0;
+        margin-bottom: 1rem;
+        height: 1.5rem;
     }
 }

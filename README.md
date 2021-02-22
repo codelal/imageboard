@@ -6,4 +6,4 @@ An image-oriented single-page application build with Vue.js during the Bootcamp.
 Node.js/Express, Vue.js, PostgreSQL, AWS S3
 
 # Imagebord - GIF 
-![imageboard][imageboard.gif]
+![imageboard](public/imageboard.gif)

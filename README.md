@@ -4,3 +4,6 @@ An image-oriented single-page application build with Vue.js during the Bootcamp.
 
 # Technologies: 
 Node.js/Express, Vue.js, PostgreSQL, AWS S3
+
+# Imagebord - GIF 
+![imageboard][public/imageboard.gif]

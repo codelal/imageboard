@@ -250,11 +250,12 @@ h2 {
     grid-area: 2/2;
     justify-self: start;
     border-radius: 12px;
-    height: 40rem;
+    height: 75vh;
     width: 50vw;
     overflow: scroll;
     box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
     overflow: scroll;
+    background-color: rgb(220, 228, 214);
 }
 
 ::-webkit-scrollbar-track {

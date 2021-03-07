@@ -165,7 +165,9 @@ p {
 /*Parent- Image -Component*/
 
 .component {
-    background-color: rgb(220, 228, 214);
+    /* background-color: rgb(220, 228, 214); */
+      /* background-color: rgb(249, 252, 246); */
+    background-color: rgb(250, 253, 247);
     position: fixed;
     top: 2.5rem;
     left: 2.5rem;
